@@ -7,8 +7,11 @@
       "ar": "الطبيب المسؤول عن حملة التلقيح المدرسية",
       "tr": "Okul aşılama kampanyasından sorumlu hekim",
       "ps": "د ښوونځي د واکسین کمپاین مسؤل ډاکټر",
-      "ku": "پزیشکی بەرپرسیار لە کمپەینی ڤاکسینی قوتابخانە"
+      "ku": "پزیشکی بەرپرسیار لە کمپەینی ڤاکسینی قوتابخانە",
+      "ro": "Medic responsabil de campania de vaccinare școlară",
+      "ka": "სასკოლო ვაქცინაციის კამპანიაზე პასუხისმგებელი ექიმი"
     },
+
     "school_year": "2025-2026",
     "max_vaccines_per_session": 4,
     "consent_required": "two_parents_written",
@@ -18,7 +21,102 @@
       "ar": "طفلكم المسجل في الصف الخامس بالإعدادية يمكنه الاستفادة مجانًا من التلقيح ضد فيروس HPV وضد التهاب السحايا بالمكورات السحائية ACWY إذا كان عمره 11 سنة أو أكثر، إضافة إلى تحديث اللقاحات الموصى بها الأخرى خلال السنة الدراسية 2025-2026.\n\nيوصى بلقاح HPV منذ سنوات عديدة للبنات والأولاد بين 11 و14 سنة للحد من السرطانات المرتبطة بالفيروس. يتكون البرنامج من جرعتين يفصل بينهما خمسة أشهر على الأقل. وقد تم إعطاء أكثر من 500 مليون جرعة عالميًا خلال عشرين سنة مع مستوى أمان ممتاز.\n\nنظرًا لزيادة حالات التهاب السحايا بالمكورات السحائية، خاصة في المدارس والتجمعات، توصي السلطات الصحية بالتلقيح بين 11 و14 سنة مع إمكانية الاستدراك حتى 24 سنة. جرعة واحدة كافية للحماية.\n\nهذه اللقاحات اختيارية ومجانية بالكامل وآمنة وفعالة، وتُعطى من قبل مهنيين صحيين مؤهلين وذوي خبرة. بعد حملتين في كليات سين-إي-مارن وتلقيح قرابة 7000 جرعة في الوسط المدرسي، لم تُسجل أي آثار جانبية خطيرة.\n\nفي يوم التلقيح، يجب على التلاميذ المصرح لهم من قبل ذويهم إحضار دفتر الصحة أو التلقيح لضمان التتبع الأمثل. سترسل المدرسة تذكيرًا. يمكن أن تتضمن الجلسة حتى 4 لقاحات كحد أقصى، وسيكون عدد اللقاحات المعطاة مطابقًا أيضًا لموافقة كل طفل.\n\nلتسجيل طفلكم، يلزم موافقة كتابية من الوالدين.",
       "tr": "Ortaokul 5. sınıfta okuyan çocuğunuz, 11 yaş ve üzerindeyse HPV ve meningokok ACWY aşılarından ücretsiz olarak yararlanabilir; ayrıca 2025–2026 eğitim yılında önerilen diğer aşıların güncellenmesi de yapılabilir.\n\nHPV aşısı, 11–14 yaş arası kız ve erkek çocuklarda HPV’ye bağlı kanserleri azaltmak ve mümkünse ortadan kaldırmak amacıyla uzun yıllardır önerilmektedir. Önerilen şema, en az 5 ay arayla yapılan iki dozdan oluşur. Son 20 yılda dünya genelinde 500 milyondan fazla doz uygulanmış ve güvenliği çok yüksektir.\n\nMenenjit vakalarındaki artış nedeniyle (özellikle okul ve toplu yaşam alanlarında) sağlık otoriteleri 11–14 yaş arasında aşıyı, 24 yaşına kadar telafi imkânıyla önermektedir. Korunma için tek doz yeterlidir.\n\nBu aşılar gönüllüdür, tamamen ücretsizdir, güvenlidir ve etkilidir; deneyimli sağlık profesyonelleri tarafından uygulanır. Seine-et-Marne ortaokullarında iki yıllık kampanya ve okullarda yaklaşık 7.000 doz uygulamasından sonra ciddi bir istenmeyen olay bildirilmemiştir.\n\nAşı günü, ebeveyn izni olan öğrencilerin sağlık/aşı karnelerini getirmesi gereklidir. Okul tarafından hatırlatma yapılacaktır. Bir seansta en fazla 4 aşı uygulanabilir; uygulanacak aşı sayısı çocuğun onayına da uygun olacaktır.\n\nÇocuğunuzu kaydetmek için her iki ebeveynin yazılı onayı gereklidir.",
       "ps": "ستاسو ماشوم چې په منځني ښوونځي (۵م ټولګي) کې زده کړه کوي، که عمر یې ۱۱ کاله یا زیات وي، کولی شي د HPV او د مننژیت ACWY واکسینونه په وړیا توګه ترلاسه کړي، او همدارنګه د ۲۰۲۵–۲۰۲۶ ښوونیز کال کې نور سپارښتل شوي واکسینونه تازه شي.\n\nد HPV واکسین د ۱۱–۱۴ کلونو نجونو او هلکانو لپاره له ډېرو کلونو راهیسې سپارښتنه کېږي تر څو د HPV پورې تړلي سرطانونه کم یا له منځه یوسي. سپارښتل شوی مهالوېش دوه دوزه لري چې لږ تر لږه ۵ میاشتې فاصله لري. په تېرو ۲۰ کلونو کې په نړۍ کې له ۵۰۰ میلیونه زیات دوزونه ورکړل شوي او خوندیتوب یې ډېر لوړ دی.\n\nد مننژیت د پېښو د زیاتوالي له امله، په ځانګړي ډول په ښوونځیو او ټولنو کې، روغتیايي ادارې د ۱۱–۱۴ کلونو ترمنځ واکسین سپارښتنه کوي، چې تر ۲۴ کلونو پورې د補 واکسین امکان لري. یوه دوزه د ساتنې لپاره کافي ده.\n\nدا واکسینونه اختیاري، بشپړ وړیا، خوندي او اغېزمن دي او د مسلکي او تجربه لرونکو روغتیايي کارکوونکو له خوا ورکول کېږي. په سین-ای-مارن کې د دوو کلونو کمپاین او نږدې ۷۰۰۰ دوزونو وروسته، کوم لوی ناوړه عارضه نه ده لیدل شوې.\n\nد واکسین په ورځ باید زده کوونکي خپل روغتیايي یا واکسین کارت له ځان سره ولري تر څو ثبت او تعقیب سم وي. ښوونځی به تاسې ته یادونه واستوي. په یوه ناسته کې تر ۴ واکسینونو پورې ورکول کېدای شي، او دقیق شمېر به د ماشوم د رضایت له مخې هم وي.\n\nد ماشوم د ثبت لپاره د دواړو والدینو لیکلې موافقه اړینه ده.",
-      "ku": "منداڵەکەتان کە لە قوتابخانەی ناوەندی (پۆلی 5) خوێندکارە، ئەگەر تەمەنی 11 ساڵ یان زیاتر بێت، دەتوانێت بەخۆرایی ڤاکسینی HPV و مننژیت ACWY وەرگرێت، هەروەها نوێکردنەوەی ڤاکسینە پێشنیارکراوەکان لە ساڵی خوێندنی 2025–2026.\n\nڤاکسینی HPV بۆ کچان و کوڕان لە نێوان 11–14 ساڵدا ساڵانە پێشنیار کراوە بۆ کەمکردنەوەی شێرپەنجە پەیوەستەکان بە HPV. پلانی ڤاکسین دوو دوزە کە نێوانیان بەلایەنی کەمەوە 5 مانگە. لە 20 ساڵدا زیاتر لە 500 ملیۆن دوز لە جیهاندا بەکار هاتووە و ئاستی ئاسایشی زۆر بەرزە.\n\nبەهۆی زیادبوونی کەیسەکانی مننژیت بە مێنینگۆکۆک، تایبەت لە قوتابخانەکان و کۆمەڵگادا، دەسەڵاتدارانی تەندروستی ڤاکسین لە نێوان 11–14 ساڵ پێشنیار دەکەن، بە توانای گرتنەوە تا 24 ساڵ. یەک دوز بۆ پاراستن کافیه.\n\nئەم ڤاکسینانە ئارەزوومەندانە، تەواو بەخۆرایی، ئاسایشدار و کاریگەرن، و لەلایەن پزیشکان و پەرستارانێکی پسپۆڕ و ئەزمووندارەوە ئەنجام دەدرێن. لە دوو ساڵی کمپەینی سین-ئێ-مارن و نزیکەی 7000 دوز لە ناو قوتابخانەکان، هیچ رووداوێکی گەورەی ناوخۆش نەبینراوە.\n\nلە ڕۆژی ڤاکسین، قوتابیانی ڕێگەپێدراو دەبێت کارتی تەندروستی یان ڤاکسین بهێنن بۆ تۆمارکردن و دوودڵی. قوتابخانە یادکردنەوە دەنێرێت. لە یەک دانیشتن دا دەتوانرێت تا 4 ڤاکسین بدرێت، و ژمارەی ڤاکسینەکانیش بە ڕێزگرتنی ڕەزامەندی منداڵ دەبێت.\n\nبۆ تۆمارکردنی منداڵەکەتان، ڕەزامەندی نووسراوی هەردوو دایک و باوک پێویستە."
+      "ku": "منداڵەکەتان کە لە قوتابخانەی ناوەندی (پۆلی 5) خوێندکارە، ئەگەر تەمەنی 11 ساڵ یان زیاتر بێت، دەتوانێت بەخۆرایی ڤاکسینی HPV و مننژیت ACWY وەرگرێت، هەروەها نوێکردنەوەی ڤاکسینە پێشنیارکراوەکان لە ساڵی خوێندنی 2025–2026.\n\nڤاکسینی HPV بۆ کچان و کوڕان لە نێوان 11–14 ساڵدا ساڵانە پێشنیار کراوە بۆ کەمکردنەوەی شێرپەنجە پەیوەستەکان بە HPV. پلانی ڤاکسین دوو دوزە کە نێوانیان بەلایەنی کەمەوە 5 مانگە. لە 20 ساڵدا زیاتر لە 500 ملیۆن دوز لە جیهاندا بەکار هاتووە و ئاستی ئاسایشی زۆر بەرزە.\n\nبەهۆی زیادبوونی کەیسەکانی مننژیت بە مێنینگۆکۆک، تایبەت لە قوتابخانەکان و کۆمەڵگادا، دەسەڵاتدارانی تەندروستی ڤاکسین لە نێوان 11–14 ساڵ پێشنیار دەکەن، بە توانای گرتنەوە تا 24 ساڵ. یەک دوز بۆ پاراستن کافیه.\n\nئەم ڤاکسینانە ئارەزوومەندانە، تەواو بەخۆرایی، ئاسایشدار و کاریگەرن، و لەلایەن پزیشکان و پەرستارانێکی پسپۆڕ و ئەزمووندارەوە ئەنجام دەدرێن. لە دوو ساڵی کمپەینی سین-ئێ-مارن و نزیکەی 7000 دوز لە ناو قوتابخانەکان، هیچ رووداوێکی گەورەی ناوخۆش نەبینراوە.\n\nلە ڕۆژی ڤاکسین، قوتابیانی ڕێگەپێدراو دەبێت کارتی تەندروستی یان ڤاکسین بهێنن بۆ تۆمارکردن و دوودڵی. قوتابخانە یادکردنەوە دەنێرێت. لە یەک دانیشتن دا دەتوانرێت تا 4 ڤاکسین بدرێت، و ژمارەی ڤاکسینەکانیش بە ڕێزگرتنی ڕەزامەندی منداڵ دەبێت.\n\nبۆ تۆمارکردنی منداڵەکەتان، ڕەزامەندی نووسراوی هەردوو دایک و باوک پێویستە.",
+      "ro": "Copilul dumneavoastră este înscris la colegiu, în clasa a V-a, și, în acest context, poate beneficia gratuit de vaccinarea împotriva HPV și a meningitei meningococice ACWY dacă are vârsta de 11 ani sau mai mult, precum și de actualizarea celorlalte vaccinări recomandate, pe parcursul anului școlar 2025–2026. Vaccinarea împotriva HPV este recomandată de mulți ani atât fetelor, cât și băieților cu vârste cuprinse între 11 și 14 ani, pentru a reduce și chiar a elimina cancerele induse de infecția cu HPV. Schema de vaccinare recomandată pentru această grupă de vârstă constă în administrarea a două doze, la un interval de cel puțin 5 luni. Această vaccinare beneficiază de un nivel de siguranță sanitară foarte ridicat, cu peste 500 de milioane de doze administrate în ultimii 20 de ani. Creșterea numărului de cazuri de meningită meningococică, în special în mediul școlar și în colectivități, a determinat autoritățile sanitare să recomande vaccinarea între 11 și 14 ani, cu posibilitatea efectuării unui rapel până la vârsta de 24 de ani. O singură doză de vaccin este suficientă pentru a fi protejat. Aceste vaccinări, sigure și eficiente, sunt voluntare și complet gratuite și vor fi realizate de echipe de profesioniști din domeniul sănătății, calificați și cu experiență. Echipa noastră de vaccinare, care desfășoară de doi ani campanii în colegiile din Seine-et-Marne și a realizat aproape 7.000 de doze de vaccin în mediul școlar, nu a raportat niciun eveniment advers major. În ziua sesiunii de vaccinare, elevii autorizați de părinți trebuie să aibă asupra lor carnetul de sănătate sau de vaccinare, pentru a asigura o trasabilitate optimă. O reamintire vă va fi transmisă de către școală. O sesiune de vaccinare poate include maximum 4 vaccinuri, iar numărul exact de vaccinuri administrate va fi conform și cu consimțământul fiecărui copil. Pentru înscrierea copilului dumneavoastră, este necesar acordul scris al ambilor părinți.",
+"ka": "თქვენი შვილი სწავლობს კოლეჯში, V კლასში, და ამ სტატუსით შეუძლია უფასოდ ისარგებლოს HPV-ისა და მენინგოკოკური ACWY მენინგიტის საწინააღმდეგო ვაქცინაციით, თუ მისი ასაკი არის 11 წელი ან მეტი, ასევე მიიღოს სხვა რეკომენდებული ვაქცინების განახლება 2025–2026 სასწავლო წლის განმავლობაში. HPV-ის საწინააღმდეგო ვაქცინაცია მრავალი წელია რეკომენდებულია 11–14 წლის გოგონებისა და ბიჭებისთვის, HPV ინფექციით გამოწვეული კიბოების შემცირებისა და შესაძლო აღმოფხვრის მიზნით. ამ ასაკობრივ ჯგუფში რეკომენდებული ვაქცინაციის სქემა მოიცავს ორი დოზის ჩატარებას, მინიმუმ 5 თვიანი შუალედით. ვაქცინაცია ხასიათდება ძალიან მაღალი უსაფრთხოების დონით — ბოლო 20 წლის განმავლობაში მსოფლიოში ჩატარდა 500 მილიონზე მეტი დოზა. მენინგოკოკური მენინგიტის შემთხვევების ზრდამ, განსაკუთრებით სასკოლო გარემოსა და კოლექტივებში, გამოიწვია ჯანმრთელობის ორგანოების რეკომენდაცია ვაქცინაციის ჩატარების შესახებ 11–14 წლის ასაკში, დამატებითი ვაქცინაციის შესაძლებლობით 24 წლამდე. დაცვისთვის საკმარისია ვაქცინის ერთი დოზა. ეს ვაქცინაციები უსაფრთხო და ეფექტიანია, ნებაყოფლობითი და სრულიად უფასო, და ტარდება კვალიფიციური და გამოცდილ ჯანმრთელობის პროფესიონალთა გუნდების მიერ. ჩვენი ვაქცინაციის გუნდი, რომელმაც ორი წლის განმავლობაში ჩაატარა კამპანიები სენ-ე-მარნის კოლეჯებში და განახორციელა დაახლოებით 7 000 დოზა სასკოლო გარემოში, არ დაუფიქსირებია არცერთი სერიოზული არასასურველი მოვლენა. ვაქცინაციის სესიის დღეს, მშობლების მიერ ავტორიზებულ მოსწავლეებს თან უნდა ჰქონდეთ ჯანმრთელობის ან ვაქცინაციის ბარათი, რათა უზრუნველყოფილი იყოს მონაცემთა ოპტიმალური აღრიცხვა. სკოლა გამოგიგზავნით შეხსენებას. ერთ სესიაში შესაძლებელია მაქსიმუმ 4 ვაქცინის ჩატარება, ხოლო ჩატარებული ვაქცინების ზუსტი რაოდენობა სრულად შეესაბამება თითოეული ბავშვის თანხმობას. თქვენი ბავშვის რეგისტრაციისთვის აუცილებელია ორივე მშობლის წერილობითი თანხმობა."
+    },
+    "vaccination_steps": {
+      "title": {
+        "fr": "La vaccination au collège, en 3 étapes",
+        "en": "School vaccination in 3 steps",
+        "ar": "التلقيح في المدرسة في 3 مراحل",
+        "tr": "Okulda aşılama: 3 adım",
+        "ps": "په ښوونځي کې واکسین په ۳ پړاوونو کې",
+        "ku": "ڤاکسین لە قوتابخانەدا لە 3 هەنگاو",
+        "ro": "Vaccinarea la școală, în 3 etape",
+        "ka": "ვაქცინაცია სკოლაში – 3 ეტაპად"
+      },
+      "subtitle": {
+        "fr": "Comprendre simplement le déroulement du dispositif.",
+        "en": "A simple overview of how the programme works.",
+        "ar": "فهم مبسّط لكيفية سير العملية.",
+        "tr": "Sürecin basit bir özeti.",
+        "ps": "د بهیر ساده تشریح.",
+        "ku": "ڕوونکردنەوەی سادەی پرۆسەکە.",
+        "ro": "O prezentare simplă a desfășurării.",
+        "ka": "პროცესის მარტივი ახსნა."
+      },
+      "steps": [
+        {
+          "number": 1,
+          "title": {
+            "fr": "S’informer",
+            "en": "Get informed",
+            "ar": "الاطلاع",
+            "tr": "Bilgi edinmek",
+            "ps": "ځان خبرول",
+            "ku": "زانیاری وەرگرتن",
+            "ro": "Informare",
+            "ka": "ინფორმირება"
+          },
+          "text": {
+            "fr": "Consulter les informations, vidéos et la FAQ pour comprendre le virus HPV, les vaccins et la vaccination au collège.",
+            "en": "Consult information, videos and the FAQ to understand HPV, vaccines and school vaccination.",
+            "ar": "الاطلاع على المعلومات والفيديوهات والأسئلة الشائعة لفهم فيروس HPV واللقاحات.",
+            "tr": "HPV ve okulda aşılama hakkında bilgi almak için içerikleri inceleyin.",
+            "ps": "د HPV او واکسینونو په اړه معلومات ولولئ.",
+            "ku": "زانیاری بۆ HPV و ڤاکسین وەربگرە.",
+            "ro": "Consultați informațiile pentru a înțelege HPV și vaccinarea.",
+            "ka": "გაეცანით ინფორმაციას HPV-სა და ვაქცინაციაზე."
+          }
+        },
+        {
+          "number": 2,
+          "title": {
+            "fr": "Donner son consentement",
+            "en": "Give consent",
+            "ar": "إعطاء الموافقة",
+            "tr": "Onay vermek",
+            "ps": "رضایت ورکول",
+            "ku": "ڕەزامەندی دان",
+            "ro": "Acordul părinților",
+            "ka": "თანხმობის მიცემა"
+          },
+          "text": {
+            "fr": "Remplir l’autorisation parentale si vous souhaitez que votre enfant bénéficie de la vaccination.",
+            "en": "Complete the parental consent form.",
+            "ar": "تعبئة استمارة الموافقة الأبوية.",
+            "tr": "Veli onay formunu doldurun.",
+            "ps": "د والدینو فورمه ډکه کړئ.",
+            "ku": "فۆرمی ڕەزامەندی پڕ بکە.",
+            "ro": "Completați formularul de consimțământ.",
+            "ka": "შეავსეთ მშობლის თანხმობის ფორმა."
+          }
+        },
+        {
+          "number": 3,
+          "title": {
+            "fr": "Vaccination au collège",
+            "en": "Vaccination at school",
+            "ar": "التلقيح في المدرسة",
+            "tr": "Okulda aşılama",
+            "ps": "په ښوونځي کې واکسین",
+            "ku": "ڤاکسین لە قوتabخانە",
+            "ro": "Vaccinare la școală",
+            "ka": "ვაქცინაცია სკოლაში"
+          },
+          "text": {
+            "fr": "La vaccination est réalisée au sein de l’établissement par des professionnels de santé qualifiés.",
+            "en": "Vaccination is carried out at school by qualified healthcare professionals.",
+            "ar": "يتم التلقيح داخل المدرسة من قبل مهنيين صحيين.",
+            "tr": "Aşılama okulda sağlık profesyonelleri tarafından yapılır.",
+            "ps": "واکسین د مسلکي کارکوونکو له خوا ورکول کېږي.",
+            "ku": "ڤاکسین لەلایەن پزیشکان ئەنجام دەدرێت.",
+            "ro": "Vaccinarea este realizată de profesioniști medicali.",
+            "ka": "ვაქცინაციას ატარებენ კვალიფიციური მედიკოსები."
+          }
+        }
+      ]
     }
   },
   "registration": {
@@ -29,7 +127,9 @@
         "ar": "التسجيل عبر الإنترنت (HPV وACWY فقط)",
         "tr": "Online kayıt (yalnızca HPV + Meningokok ACWY)",
         "ps": "آنلاین ثبت (یوازې HPV + ACWY)",
-        "ku": "تۆمارکردنی ئۆنلاین (تەنها HPV + ACWY)"
+        "ku": "تۆمارکردنی ئۆنلاین (تەنها HPV + ACWY)",
+        "ro": "Înscriere online (doar HPV + meningită ACWY)",
+        "ka": "ონლაინ რეგისტრაცია (მხოლოდ HPV და მენინგიტი ACWY)"
       },
       "url": "https://idf.campagnehpv.fr",
       "note": {
@@ -38,7 +138,9 @@
         "ar": "للقاحات الأخرى، يرجى استخدام الاستمارة الورقية إضافةً إلى ذلك.",
         "tr": "Diğer aşılar için lütfen ayrıca kağıt form kullanın.",
         "ps": "د نورو واکسینونو لپاره مهرباني وکړئ کاغذي فورمه هم وکاروئ.",
-        "ku": "بۆ ڤاکسینەکانی تر تکایە فۆرمی کاغەزی بەکارهێنە."
+        "ku": "بۆ ڤاکسینەکانی تر تکایە فۆرمی کاغەزی بەکارهێنە.",
+        "ro": "Pentru celelalte vaccinuri (dTPcoq, ROR, hepatita B), vă rugăm să utilizați și formularul pe hârtie.",
+        "ka": "სხვა ვაქცინებისთვის (dTPcoq, ROR, ჰეპატიტი B) გთხოვთ, დამატებით გამოიყენოთ ქაღალდის ფორმა."
       }
     }
   },
@@ -129,23 +231,27 @@
         "ar": "شعار القسم",
         "tr": "Servis logosu",
         "ps": "د څانګې لوګو",
-        "ku": "لۆگۆی بەش"
+        "ku": "لۆگۆی بەش",
+        "ro": "Sigla serviciului",
+        "ka": "სამსახურის ლოგო"
       },
       "file": "img/logo_service.png",
-      "placement": "header"
+      "placement": "footer"
     }
   },
   "official_idf": {
     "site": {
       "label": {
-        "fr": "Site officiel – Vaccination Collège Île-de-France",
-        "en": "Official website – Île-de-France Middle School Vaccination",
-        "ar": "الموقع الرسمي – تلقيح الإعدادية في إيل دو فرانس",
-        "tr": "Resmî site – Île-de-France Ortaokul Aşılama",
-        "ps": "رسمي وېبپاڼه – د ایل-دو-فرانس د منځني ښوونځي واکسین",
-        "ku": "ماڵپەڕی فەرمی – ڤاکسینی قوتابخانەی ناوەندی لە ئیل-دو-فرانس"
+        "fr": "Site de la campagne régionale – Vaccination Collège Île-de-France",
+        "en": "Regional campaign website – Île-de-France Middle School Vaccination",
+        "ar": "موقع الحملة الإقليمية – تلقيح الإعدادية في إيل دو فرانس",
+        "tr": "Bölgesel kampanya sitesi – Île-de-France Ortaokul Aşılama",
+        "ps": "د سیمه‌ییز کمپاین وېبپاڼه – د ایل-دو-فرانس د منځني ښوونځي واکسین",
+        "ku": "ماڵپەڕی کمپەینی هەرێمی – ڤاکسینی قوتابخانەی ناوەندی لە ئیل-دو-فرانس",
+        "ro": "Site-ul campaniei regionale – Vaccinarea la colegiu în Île-de-France",
+        "ka": "რეგიონული კამპანიის საიტი – კოლეჯების ვაქცინაცია Île-de-France"
       },
-      "url": "https://vaccination-hpv-iledefrance.fr/"
+      "url": "https://vaccination-college-iledefrance.fr/"
     },
     "flyer_pdf": {
       "label": {
@@ -154,7 +260,10 @@
         "ar": "المنشور الرسمي – حملة إيل دو فرانس (PDF)",
         "tr": "Resmî broşür – Île-de-France kampanyası (PDF)",
         "ps": "رسمي پاڼه – د ایل-دو-فرانس کمپاین (PDF)",
-        "ku": "فلایەری فەرمی – کمپەینی ئیل-دو-فرانس (PDF)"
+        "ku": "فلایەری فەرمی – کمپەینی ئیل-دو-فرانس (PDF)",
+        "ro": "Flyer oficial – Campania de vaccinare la colegiu Île-de-France (PDF)",
+        "ka": "ოფიციალური ფლაერი – კოლეჯების ვაქცინაციის კამპანია Île-de-France (PDF)"
+
       },
       "file": "pdf/flyer_officiel_vaccination_college_idf.pdf"
     }
@@ -166,7 +275,9 @@
       "ar": "موارد HPV الرسمية – للمراهقين (كل اللغات)",
       "tr": "Resmî HPV kaynakları – ergenler (tüm diller)",
       "ps": "د HPV رسمي سرچینې – تنکي ځوانان (ټولې ژبې)",
-      "ku": "سەرچاوە فەرمییەکانی HPV – گەنجان (هەموو زمانەکان)"
+      "ku": "سەرچاوە فەرمییەکانی HPV – گەنجان (هەموو زمانەکان)",
+      "ro": "Resurse oficiale HPV – adolescenți (toate limbile)",
+      "ka": "HPV-ის ოფიციალური რესურსები – მოზარდები (ყველა ენა)"
     },
     "url": "https://vaccination-hpv-iledefrance.fr/ressources/"
   },
@@ -177,7 +288,9 @@
       "ar": "التهاب السحايا (ACWY) – وثائق مفيدة (PDF)",
       "tr": "Menenjit (ACWY) – faydalı belgeler (PDF)",
       "ps": "مننژیت (ACWY) – ګټور اسناد (PDF)",
-      "ku": "مننژیت (ACWY) – بەڵگەنامەی پێویست (PDF)"
+      "ku": "مننژیت (ACWY) – بەڵگەنامەی پێویست (PDF)",
+      "ro": "Meningită (ACWY) – documente utile (PDF)",
+      "ka": "მენინგიტი (ACWY) – სასარგებლო დოკუმენტები (PDF)"
     },
     "items": [
       {
@@ -188,7 +301,9 @@
           "ar": "منشور التهاب السحايا – صحة عامة فرنسا",
           "tr": "Menenjit broşürü – Santé publique France",
           "ps": "د مننژیت پاڼه – Santé publique France",
-          "ku": "فلایەری مننژیت – Santé publique France"
+          "ku": "فلایەری مننژیت – Santé publique France",
+          "ro": "Flyer meningită – Santé publique France",
+          "ka": "მენინგიტის ფლაერი – Santé publique France"
         },
         "file": "pdf/flyer_meningite_spf.pdf"
       },
@@ -200,7 +315,9 @@
           "ar": "ملخص سريع عن التهاب السحايا",
           "tr": "Menenjit özet bilgi",
           "ps": "د مننژیت لنډ یادښت",
-          "ku": "پەڕەی یادداشت – مننژیت"
+          "ku": "پەڕەی یادداشت – مننژیت",
+          "ro": "Fișă memo meningită",
+          "ka": "მენინგიტის მემორანდუმი"
         },
         "file": "pdf/fiche_memo_meningite.pdf"
       },
@@ -212,7 +329,9 @@
           "ar": "الجدول المبسط للتطعيمات – 2025",
           "tr": "Basitleştirilmiş aşı takvimi – 2025",
           "ps": "د واکسین ساده مهالوېش – 2025",
-          "ku": "ڕۆژژمێری سادەی ڤاکسین – 2025"
+          "ku": "ڕۆژژمێری سادەی ڤاکسین – 2025",
+          "ro": "Calendar simplificat al vaccinărilor – 2025",
+          "ka": "ვაქცინაციის გამარტივებული კალენდარი – 2025"
         },
         "file": "pdf/calendrier_vaccinal_2025_simplifie.pdf"
       },
@@ -224,7 +343,9 @@
           "ar": "اللقاحات في جميع الأعمار – الجدول الزمني للتطعيمات 2025 (كامل)",
           "tr": "Her yaş için aşılar – Aşı takvimi 2025 (tam)",
           "ps": "په هر عمر کې واکسینونه – د واکسین مهالوېش 2025 (بشپړ)",
-          "ku": "ڤاکسین بۆ هەموو تەمەنەکان – ڕۆژژمێری ڤاکسین 2025 (تەواو)"
+          "ku": "ڤاکسین بۆ هەموو تەمەنەکان – ڕۆژژمێری ڤاکسین 2025 (تەواو)",
+          "ro": "Vaccinuri la toate vârstele – Calendarul de vaccinare 2025 (complet)",
+          "ka": "ვაქცინები ყველა ასაკისთვის – ვაქცინაციის კალენდარი 2025 (სრული)"
         },
         "file": "pdf/calendrier_vaccinal_2025_complet.pdf"
       }

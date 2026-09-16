@@ -210,16 +210,16 @@
         "ro": "Ce este HPV?",
         "ka": "რა არის HPV?"
       },
-      "a": {
-        "fr": "Le HPV (papillomavirus humain) est un virus très fréquent. Beaucoup de personnes y sont exposées au cours de leur vie, souvent sans symptômes.",
-        "ar": "فيروس الورم الحليمي البشري شائع جدًا، ويتعرّض له كثير من الناس خلال حياتهم غالبًا دون أعراض.",
-        "tr": "HPV çok yaygın bir virüstür. Pek çok kişi hayatında bir kez karşılaşır, çoğu zaman belirti olmaz.",
-        "en": "HPV is a very common virus. Many people are exposed during their life, often without symptoms.",
-        "ps": "HPV یو ډېر عام ویروس دی؛ ډېر خلک په ژوند کې ورسره مخ کېږي، اکثره پرته له نښو.",
-        "ku": "HPV ڤایرۆسێکی زۆر باوە. زۆربەی خەڵک لە ژیاندا پێی دەگیرن، زۆرجار بەبێ نیشانە.",
-        "ro": "HPV (papilomavirusul uman) este un virus foarte frecvent. Multe persoane sunt expuse de-a lungul vieții, adesea fără simptome.",
-        "ka": "HPV (ადამიანის პაპილომავირუსი) ძალიან გავრცელებული ვირუსია. ბევრ ადამიანს ცხოვრებაში ერთხელ მაინც აქვს შეხება, ხშირად სიმპტომების გარეშე."
-      }
+     "a": {
+  "fr": "Le HPV (papillomavirus humain) est un virus. C’est un virus très fréquent : beaucoup de personnes y sont exposées au cours de leur vie, souvent sans symptômes. Il existe un vaccin permettant de se protéger contre certains types de HPV.",
+  "en": "HPV (human papillomavirus) is a virus. It is very common: many people are exposed to it during their lifetime, often without symptoms. There is a vaccine that helps protect against certain types of HPV.",
+  "ar": "فيروس الورم الحليمي البشري (HPV) هو فيروس. وهو شائع جدًا، إذ يتعرض له كثير من الأشخاص خلال حياتهم غالبًا دون أعراض. يوجد لقاح يساهم في الحماية من بعض أنواع فيروس HPV.",
+  "tr": "HPV (insan papilloma virüsü) bir virüstür. Çok yaygındır ve birçok kişi yaşamı boyunca bu virüsle karşılaşır, çoğu zaman belirti görülmez. HPV’nin bazı türlerine karşı koruma sağlayan bir aşı mevcuttur.",
+  "ps": "HPV (د انسان پاپیلوما ویروس) یو ویروس دی. دا یو ډېر عام ویروس دی؛ ډېر خلک د خپل ژوند په اوږدو کې ورسره مخ کېږي، ډېر ځله پرته له نښو. داسې واکسین شته چې د HPV د ځینو ډولونو پر وړاندې ساتنه برابروي.",
+  "ku": "HPV (ڤایرۆسی پاپیلۆمای مرۆڤ) ڤایرۆسێکە. زۆر باوە و زۆربەی خەڵک لە ژیاندا پێی دەگیرن، زۆرجار بەبێ نیشانە. ڤاکسینێک هەیە کە دەتوانێت دژ بە هەندێک جۆری HPV پاراستن بدات.",
+  "ro": "HPV (papilomavirusul uman) este un virus. Este foarte frecvent: multe persoane sunt expuse de-a lungul vieții, adesea fără simptome. Există un vaccin care permite protecția împotriva anumitor tipuri de HPV.",
+  "ka": "HPV (ადამიანის პაპილომავირუსი) არის ვირუსი. ეს ძალიან გავრცელებული ვირუსია და ბევრ ადამიანს ცხოვრების განმავლობაში აქვს მასთან შეხება, ხშირად სიმპტომების გარეშე. არსებობს ვაქცინა, რომელიც იცავს HPV-ის გარკვეული ტიპებისგან."
+}
     },
     {
       "id": "q5",
@@ -235,15 +235,15 @@
         "ka": "რა დაავადებებს იწვევს HPV?"
       },
       "a": {
-        "fr": "Certains types de HPV peuvent causer des cancers (col de l’utérus, gorge/ORL, anus, pénis) et des verrues génitales.",
-        "ar": "بعض أنواع HPV قد تسبب سرطانات (عنق الرحم، الحلق، الشرج، القضيب) وقد تسبب الثآليل التناسلية.",
-        "tr": "Bazı HPV tipleri kanserlere (rahim ağzı, boğaz/ORL, anal, penis) ve genital siğillere neden olabilir.",
-        "en": "Some HPV types can cause cancers (cervix, throat/ENT, anus, penis) and genital warts.",
-        "ps": "ځینې ډولونه سرطانونه (د رحم غاړه، ستونی، مقعد، تناسلي برخه) او تناسلي زګېلونه رامنځته کولی شي.",
-        "ku": "هەندێک جۆری HPV دەتوانێت شێرپەنجە (قژی، گەروو، مقعد، پیاوان) و زگەڵی تناسلی دروست بکات.",
-        "ro": "Anumite tipuri de HPV pot provoca cancere (col uterin, gât/ORL, anus, penis) și veruci genitale.",
-        "ka": "HPV‑ს ზოგიერთი ტიპი შეიძლება იწვევდეს კიბოს (საშვილოსნოს ყელი, ყელი/ENT, ანუსი, პენისი) და გენიტალურ მეჭეჭებს."
-      }
+  "fr": "La plupart des infections par le HPV disparaissent spontanément sans conséquence. Cependant, certains types de HPV peuvent, à long terme, provoquer des maladies comme des verrues génitales ou, plus rarement, certains cancers (col de l’utérus, gorge/ORL, anus, pénis).",
+  "en": "Most HPV infections clear on their own without causing problems. However, some types of HPV can, over time, cause conditions such as genital warts or, more rarely, certain cancers (cervix, throat/ENT, anus, penis).",
+  "ar": "تزول معظم عدوى فيروس HPV تلقائيًا دون عواقب. ومع ذلك، قد تؤدي بعض أنواع HPV، على المدى الطويل، إلى أمراض مثل الثآليل التناسلية أو، في حالات نادرة، بعض أنواع السرطان (عنق الرحم، الحلق، الشرج، القضيب).",
+  "tr": "HPV enfeksiyonlarının çoğu kendiliğinden iyileşir ve sorun yaratmaz. Ancak bazı HPV türleri zamanla genital siğiller veya daha nadiren bazı kanserlere (rahim ağzı, boğaz/ORL, anüs, penis) yol açabilir.",
+  "ps": "د HPV ډېری انتانات پخپله له منځه ځي او کومه ستونزه نه جوړوي. خو د HPV ځینې ډولونه کولای شي د وخت په تېرېدو سره تناسلي زګېلونه او یا په نادرو مواردو کې ځینې سرطانونه (د رحم غاړه، ستونی، مقعد، تناسلي غړی) رامنځته کړي.",
+  "ku": "زۆربەی تووشبوونەکانی HPV خۆیان بەخۆی دەچن و هیچ گرفتێک دروست ناکەن. بەڵام هەندێک جۆری HPV دەتوانن لە ماوەی درێژدا زگەڵی تناسلی یان بە دەگمەنی هەندێک شێرپەنجە (قژی، گەروو/ORL، مقعد، پیاوان) دروست بکەن.",
+  "ro": "Majoritatea infecțiilor cu HPV dispar de la sine fără consecințe. Totuși, anumite tipuri de HPV pot provoca, în timp, afecțiuni precum veruci genitale sau, mai rar, unele tipuri de cancer (col uterin, gât/ORL, anus, penis).",
+  "ka": "HPV-ით ინფიცირების უმეტესობა თავისით გადის და გართულებებს არ იწვევს. თუმცა HPV-ის ზოგიერთი ტიპი შეიძლება დროთა განმავლობაში გამოიწვიოს გენიტალური მეჭეჭები ან, იშვიათად, გარკვეული ტიპის კიბო (საშვილოსნოს ყელი, ყელი/ENT, ანუსი, პენისი)."
+}
     },
     {
       "id": "q6",
@@ -259,15 +259,15 @@
         "ka": "HPV ვაქცინა უკავშირდება სექსუალობას?"
       },
       "a": {
-        "fr": "Non. C’est un vaccin de prévention contre un virus et contre des cancers futurs, pas un jugement sur les comportements.",
-        "ar": "لا. هو لقاح وقائي ضد فيروس وللوقاية من سرطانات مستقبلية، وليس له علاقة بالسلوك.",
-        "tr": "Hayır. Bu, bir virüse ve gelecekteki kanserlere karşı korunma aşısıdır; davranışla ilgili değildir.",
-        "en": "No. It’s a prevention vaccine against a virus and future cancers, not a judgment about behavior.",
-        "ps": "نه. دا د ویروس او راتلونکو سرطانونو د مخنیوي لپاره واکسین دی، د چلند سره تړاو نه لري.",
-        "ku": "نەخێر. ئەمە ڤاکسینی پێشگیرییە دژ بە ڤایرۆس و شێرپەنجەی داهاتوو؛ هیچ پەیوەندی بە هەڵسوکەوت نییە.",
-        "ro": "Nu. Este un vaccin de prevenție împotriva unui virus și a unor cancere viitoare, nu o judecată asupra comportamentelor.",
-        "ka": "არა. ეს არის პრევენციული ვაქცინა ვირუსისა და მომავალი კიბოების წინააღმდეგ და არა ქცევების შეფასება."
-      }
+  "fr": "Non. Le vaccin HPV est un vaccin de prévention contre un virus. Il est recommandé à l’adolescence car il est plus efficace lorsqu’il est administré avant toute exposition au virus, indépendamment de toute notion de sexualité.",
+  "en": "No. The HPV vaccine is a preventive vaccine against a virus. It is recommended in adolescence because it works best when given before any exposure to the virus, regardless of any notion of sexuality.",
+  "ar": "لا. لقاح HPV هو لقاح وقائي ضد فيروس. يُوصى به في سن المراهقة لأنه يكون أكثر فاعلية عند إعطائه قبل أي تعرّض للفيروس، بغض النظر عن أي مفهوم يتعلق بالجنسية.",
+  "tr": "Hayır. HPV aşısı bir virüse karşı koruyucu bir aşıdır. Ergenlik döneminde önerilir çünkü virüsle herhangi bir temas olmadan önce yapıldığında en etkili olur ve cinsellikle ilgili değildir.",
+  "ps": "نه. د HPV واکسین د یو ویروس پر وړاندې د مخنیوي واکسین دی. دا په تنکيتوب کې ځکه سپارښتنه کېږي چې د ویروس له هر ډول تماس مخکې تر ټولو ښه اغېز لري او د جنسي اړیکو سره تړاو نه لري.",
+  "ku": "نەخێر. ڤاکسینی HPV ڤاکسینێکی پێشگیرییە دژ بە ڤایرۆس. لە تەمەنی گەنجیدا پێشنیار دەکرێت چونکە پێش هەر تووشبوونێک بە ڤایرۆس کاریگەرترە و هیچ پەیوەندی بە سێکس نییە.",
+  "ro": "Nu. Vaccinul HPV este un vaccin de prevenție împotriva unui virus. Este recomandat în adolescență deoarece este mai eficient atunci când este administrat înainte de orice expunere la virus, independent de orice noțiune de sexualitate.",
+  "ka": "არა. HPV ვაქცინა არის ვირუსის წინააღმდეგ პრევენციული ვაქცინა. იგი რეკომენდებულია მოზარდობის ასაკში, რადგან ყველაზე ეფექტურია ვირუსთან ნებისმიერ კონტაქტამდე და არ არის დაკავშირებული სექსუალობასთან."
+}
     },
     {
       "id": "q7",
@@ -283,15 +283,15 @@
         "ka": "რამდენი დოზაა HPV‑სთვის?"
       },
       "a": {
-        "fr": "Le plus souvent 2 doses si le schéma est débuté entre 11 et 14 ans (les détails exacts dépendent de l’âge et du calendrier).",
-        "ar": "غالبًا جرعتان إذا بدأ التلقيح بين 11 و14 سنة (التفاصيل تعتمد على العمر والبرنامج).",
-        "tr": "Genelde 11–14 yaşta başlanırsa 2 doz (yaşa ve takvime göre değişebilir).",
-        "en": "Most often 2 doses when started between ages 11–14 (exact schedule depends on age and program).",
-        "ps": "اکثره که ۱۱–۱۴ کلونو کې پیل شي ۲ دوزه (کره مهال‌وېش د عمر له مخې بدلېږي).",
-        "ku": "زۆرجار ئەگەر لە 11–14 ساڵدا دەست پێبکات 2 دوزە (بەپێی تەمەن و پڕۆگرام دەگۆڕێت).",
-        "ro": "De cele mai multe ori, 2 doze dacă schema începe între 11 și 14 ani (detaliile exacte depind de vârstă și de calendar).",
-        "ka": "უმეტეს შემთხვევაში 2 დოზა, თუ სქემა იწყება 11–14 წლის ასაკში (ზუსტი დეტალები დამოკიდებულია ასაკსა და კალენდარზე)."
-      }
+  "fr": "Pour le vaccin HPV, le schéma le plus fréquent comprend 2 doses lorsque la vaccination débute entre 11 et 14 ans. Le nombre de doses peut varier selon l’âge et la situation ; le carnet de santé de votre enfant permet de vérifier le schéma adapté.",
+  "en": "For the HPV vaccine, the most common schedule includes 2 doses when vaccination starts between ages 11 and 14. The number of doses may vary depending on age and individual situation; your child’s health record helps determine the appropriate schedule.",
+  "ar": "بالنسبة للقاح HPV، يتكوّن الجدول الأكثر شيوعًا من جرعتين عند بدء التلقيح بين 11 و14 سنة. قد يختلف عدد الجرعات حسب العمر والحالة الفردية، ويساعد دفتر الصحة في تحديد الجدول المناسب.",
+  "tr": "HPV aşısı için en sık uygulanan şema, aşı 11–14 yaş arasında başlatıldığında 2 dozdan oluşur. Doz sayısı yaşa ve bireysel duruma göre değişebilir; çocuğun sağlık karnesi uygun şemayı belirlemeye yardımcı olur.",
+  "ps": "د HPV واکسین لپاره تر ټولو عام مهال‌وېش هغه دی چې که واکسین د ۱۱ او ۱۴ کلونو ترمنځ پیل شي، ۲ دوزه ورکول کېږي. دوزونه د عمر او حالت له مخې بدلېدای شي؛ د ماشوم د روغتیا کارت د مناسب مهال‌وېش په ټاکلو کې مرسته کوي.",
+  "ku": "بۆ ڤاکسینی HPV، پلانی باوترین 2 دوزە ئەگەر ڤاکسین لە نێوان 11 و 14 ساڵدا دەست پێبکات. ژمارەی دوزەکان دەتوانێت بە پێی تەمەن و بارودۆخی تاکەکەس بگۆڕدرێت؛ کارتی تەندروستی منداڵ یارمەتیدەرە بۆ دیاریکردنی پلانی گونجاو.",
+  "ro": "Pentru vaccinul HPV, schema cea mai frecventă cuprinde 2 doze atunci când vaccinarea începe între 11 și 14 ani. Numărul de doze poate varia în funcție de vârstă și de situația individuală; carnetul de sănătate ajută la stabilirea schemei adecvate.",
+  "ka": "HPV ვაქცინისთვის ყველაზე გავრცელებული სქემა მოიცავს 2 დოზას, თუ ვაქცინაცია იწყება 11–14 წლის ასაკში. დოზების რაოდენობა შეიძლება განსხვავდებოდეს ასაკისა და ინდივიდუალური მდგომარეობის მიხედვით; ბავშვის ჯანმრთელობის წიგნაკი გვეხმარება შესაბამისი სქემის განსაზღვრაში."
+}
     },
     {
       "id": "q8",
