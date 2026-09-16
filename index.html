@@ -1247,33 +1247,6 @@ if (introData?.hpv_flyer_multilang?.url) {
   );
 });
 
-// Calendrier simplifié des vaccinations – 2025
-if (introData?.calendar_simple?.file) {
-  group.appendChild(
-    makeBtn(
-      t(introData.calendar_simple.label, 'Calendrier simplifié des vaccinations – 2025'),
-      normPath(introData.calendar_simple.file),
-      'btn',
-      'calendar_simple'
-    )
-  );
-}
-// Calendrier vaccinal complet – 2025
-if (introData?.calendar_full?.file) {
-  group.appendChild(
-    makeBtn(
-      t(
-        introData.calendar_full.label,
-        'Les vaccins à tous les âges – Calendrier vaccinal 2025'
-      ),
-      normPath(introData.calendar_full.file),
-      'btn',
-      'calendar_full'
-    )
-  );
-}
-
-
       const note = t(introData.meningite_documents.note, '');
       if(note){
         const n = document.createElement('div');
@@ -1372,7 +1345,7 @@ div.addEventListener('click', (e) => {
     }
 
     // ÉTAPE 3 — Vaccination
-    if (step.number === 3 && ['contact_email','meningite_doc','calendar_simple','calendar_full'].includes(key)) {
+    if (step.number === 3 && ['contact_email','meningite_doc'].includes(key)) {
       group.appendChild(clone);
     }
   });
@@ -1551,19 +1524,6 @@ div.addEventListener('click', (e) => {
     ]);
     faqData = await faqRes.json();
     introData = await introRes.json();
-
-    // ===== Surcharges manuelles (sans modifier intro_resources.json) =====
-    // Point 1 : nouveau lien "Ressources officielles HPV"
-    if(introData?.hpv_flyer_multilang){
-      introData.hpv_flyer_multilang.url = 'https://vaccination-college-iledefrance.fr/ressources/';
-    }
-    // Point 3 : nouveaux PDF calendrier vaccinal 2026 (mêmes noms de label pour l'instant)
-    if(introData?.calendar_simple){
-      introData.calendar_simple.file = 'pdf/calendrier_vaccinal_2026_simplifie.pdf';
-    }
-    if(introData?.calendar_full){
-      introData.calendar_full.file = 'pdf/calendrier_vaccinal_2026_complet.pdf';
-    }
 
     // initial lang = first meta language if present
     const langs = faqData?.meta?.languages || ['fr'];
