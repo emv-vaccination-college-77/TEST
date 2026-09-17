@@ -811,9 +811,6 @@ if (isMail) {
   a.target = '_self';          // ✅ indispensable
 } 
 else if (isLocalPdf) {
-  if (key === 'calendar_full') {
-    a.dataset.downloadName = 'Les vaccins à tous les âges.pdf';
-  }
   a.target = '_blank';
   a.rel = 'noopener';
 }
@@ -1153,10 +1150,11 @@ else {
     const addBtn = (label, href) => group.appendChild(makeBtn(label, href, 'btn'));
 
     // Formulaire d'autorisation en ligne (remplace les 2 anciens PDF à remplir à la main) — en premier
+    // La langue en cours du site est transmise au formulaire via ?lang=...
     group.appendChild(
       makeBtn(
         t(UI_TEXT.formOnlineLabel, "Remplir le formulaire d'autorisation en ligne"),
-        'autorisation-vaccination.html',
+        `autorisation-vaccination.html?lang=${encodeURIComponent(lang)}`,
         'btn btn-cta-animated',
         'form_online'
       )
@@ -1237,14 +1235,16 @@ if (introData?.hpv_flyer_multilang?.url) {
       root.appendChild(mgroup);
 
       (introData.meningite_documents.items || []).forEach(it => {
-  mgroup.appendChild(
-    makeBtn(
+  const docBtn = makeBtn(
       t(it.label, 'Document'),
       normPath(it.file),
       'btn',
       'meningite_doc'
-    )
-  );
+    );
+  if (it.id === 'calendrier_vaccinal_2026_complet') {
+    docBtn.dataset.downloadName = 'Les vaccins à tous les âges.pdf';
+  }
+  mgroup.appendChild(docBtn);
 });
 
       const note = t(introData.meningite_documents.note, '');
