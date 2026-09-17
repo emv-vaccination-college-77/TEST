@@ -1206,6 +1206,16 @@ function pdfToBase64(pdfDoc){
   return dataUri.substring(dataUri.indexOf(',') + 1);
 }
 
+// Nom-Prénom-Collège.pdf (le collège est ajouté seulement s'il est renseigné)
+function buildPdfFilename(){
+  const childLast = document.getElementById('childLastName').value.trim();
+  const childFirst = document.getElementById('childFirstName').value.trim();
+  const school = document.getElementById('schoolName').value.trim();
+  const parts = [childLast, childFirst, school].filter(Boolean);
+  const base = parts.length ? parts.join('-') : 'enfant';
+  return base.replace(/\s+/g, '-') + '.pdf';
+}
+
 document.getElementById('sendEmailBtn').addEventListener('click', async ()=>{
   const btn = document.getElementById('sendEmailBtn');
   const originalLabel = btn.textContent;
@@ -1220,8 +1230,7 @@ document.getElementById('sendEmailBtn').addEventListener('click', async ()=>{
     const childLast = document.getElementById('childLastName').value;
     const school = document.getElementById('schoolName').value;
     const town = document.getElementById('schoolTown').value;
-    const filenameBase = (childFirst + '-' + childLast).trim().replace(/\s+/g,'-') || 'enfant';
-    const filename = `Autorisation-vaccination-${filenameBase}.pdf`;
+    const filename = buildPdfFilename();
 
     const payload = {
       pdf_base64: pdfBase64,
@@ -1259,9 +1268,7 @@ document.getElementById('downloadBtn').addEventListener('click', async ()=>{
   btn.textContent = tr('generatingLabel');
   try{
     const doc = buildPdf();
-    const childName = (document.getElementById('childFirstName').value + '-' + document.getElementById('childLastName').value)
-      .trim().replace(/\s+/g,'-') || 'enfant';
-    const filename = `Autorisation-vaccination-${childName}.pdf`;
+    const filename = buildPdfFilename();
     const blob = doc.output('blob');
 
     const downloadsApi = (window.claude && typeof window.claude.use === 'function')
