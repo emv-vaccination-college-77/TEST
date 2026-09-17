@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autorisation vaccination HPV / ACWY</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --blue-900:#0b3d5c;
+    --blue-700:#0e6ba8;
+    --blue-100:#e7f2f9;
+    --green-700:#1e7d32;
+    --green-100:#e6f4ea;
+    --green-border:#a8d5b5;
+    --red-700:#b3261e;
+    --red-100:#fbe9e7;
+    --red-border:#e8b4af;
+    --ink:#1c2530;
+    --ink-soft:#5b6672;
+    --line:#d7dee5;
+    --bg:#f4f7f9;
+    --card:#ffffff;
+    --focus:#0e6ba8;
+  }
+  :root:not([data-theme="light"]){
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#e8edf2;
+      --ink-soft:#a8b3bd;
+      --line:#2c3a46;
+      --bg:#111820;
+      --card:#182229;
+      --blue-100:#132b3a;
+      --green-100:#12281a;
+      --green-border:#255c37;
+      --red-100:#331c1a;
+      --red-border:#7a3530;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#e8edf2;
+    --ink-soft:#a8b3bd;
+    --line:#2c3a46;
+    --bg:#111820;
+    --card:#182229;
+    --blue-100:#132b3a;
+    --green-100:#12281a;
+    --green-border:#255c37;
+    --red-100:#331c1a;
+    --red-border:#7a3530;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    padding:24px 14px 60px;
+  }
+  .wrap{max-width:720px;margin:0 auto;}
+  header.page-head{text-align:center;margin-bottom:22px;}
+  header.page-head h1{
+    font-size:1.28rem;
+    line-height:1.35;
+    color:var(--blue-900);
+    margin:0 0 6px;
+    font-weight:700;
+  }
+  header.page-head p{color:var(--ink-soft);font-size:.92rem;margin:0;}
+
+  .stepper{display:flex;gap:6px;margin-bottom:22px;}
+  .stepper .dot{
+    flex:1;
+    height:6px;
+    border-radius:4px;
+    background:var(--line);
+    transition:background .25s ease;
+  }
+  .stepper .dot.done,.stepper .dot.active{background:var(--blue-700);}
+
+  .step-label{
+    text-align:center;
+    font-size:.82rem;
+    color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+  .step-label strong{color:var(--blue-900);}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px 20px;
+    box-shadow:0 1px 3px rgba(0,0,0,.05);
+  }
+
+  .step{display:none;}
+  .step.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  h2.section-title{
+    font-size:1.02rem;
+    color:var(--blue-900);
+    margin:0 0 16px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block;
+    font-size:.86rem;
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink);
+  }
+  .field .hint{font-size:.78rem;color:var(--ink-soft);margin-top:4px;}
+  input[type=text],input[type=tel],input[type=date],select{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:var(--card);
+    color:var(--ink);
+    font-size:.95rem;
+    font-family:inherit;
+  }
+  input:focus,select:focus,textarea:focus{
+    outline:2px solid var(--focus);
+    outline-offset:1px;
+  }
+  .field-invalid{
+    border-color:#c62828 !important;
+    box-shadow:0 0 0 2px rgba(198,38,38,.15);
+  }
+  .carnet-option.field-invalid, .sig-wrap.field-invalid{
+    border-color:#c62828;
+    box-shadow:0 0 0 2px rgba(198,38,38,.15);
+  }
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media (max-width:480px){.row2{grid-template-columns:1fr;}}
+
+  .parent-block{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 14px 4px;
+    margin-bottom:14px;
+  }
+  .parent-block h3{margin:0 0 12px;font-size:.92rem;color:var(--blue-700);}
+
+  fieldset{border:none;margin:0;padding:0;}
+  .radio-line{
+    display:flex;align-items:center;gap:8px;margin:2px -8px;font-size:.9rem;
+    cursor:pointer;padding:8px;border-radius:8px;transition:background .12s ease;
+  }
+  .radio-line:hover{background:var(--blue-100);}
+  .radio-line input{width:auto;flex-shrink:0;}
+  .radio-line label{cursor:pointer;width:100%;}
+
+  .auth-block{
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:14px;
+    border:1px solid var(--line);
+  }
+  .auth-block .auth-title{font-weight:700;font-size:.94rem;margin-bottom:4px;}
+  .auth-block .auth-sub{font-size:.82rem;color:var(--ink-soft);margin-bottom:10px;}
+  .auth-choice{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .choice-btn{
+    flex:1;
+    min-width:140px;
+    text-align:center;
+    padding:10px 8px;
+    border-radius:8px;
+    border:1.5px solid var(--line);
+    background:var(--card);
+    cursor:pointer;
+    font-size:.86rem;
+    font-weight:600;
+    color:var(--ink-soft);
+    transition:all .15s ease;
+  }
+  .choice-btn.yes.selected{
+    background:var(--green-100);
+    border-color:var(--green-border);
+    color:var(--green-700);
+  }
+  .choice-btn.no.selected{
+    background:var(--red-100);
+    border-color:var(--red-border);
+    color:var(--red-700);
+  }
+  .sub-checks{
+    margin-top:12px;
+    padding-top:12px;
+    border-top:1px dashed var(--line);
+    display:none;
+  }
+  .sub-checks.show{display:block;}
+  .sub-check-line{margin-bottom:10px;}
+  .sub-check-line label{
+    display:flex;gap:8px;align-items:flex-start;font-size:.86rem;font-weight:600;
+    cursor:pointer;padding:8px;margin:0 -8px;border-radius:8px;
+    transition:background .12s ease;
+  }
+  .sub-check-line label:hover{background:var(--blue-100);}
+  .sub-check-line label:active{background:var(--green-100);}
+  .sub-check-line input{width:auto;margin-top:3px;flex-shrink:0;}
+  .sub-check-line .sub-hint{font-weight:400;color:var(--ink-soft);font-size:.78rem;margin-top:2px;margin-left:24px;}
+
+  .carnet-option{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+    margin-bottom:10px;
+    cursor:pointer;
+    transition:background .12s ease, border-color .12s ease;
+  }
+  .carnet-option:hover{background:var(--blue-100);}
+  .carnet-option.selected{border-color:var(--blue-700);background:var(--blue-100);}
+  .carnet-option input{margin-top:3px;width:auto;flex-shrink:0;}
+
+  .sig-wrap{
+    border:1px dashed var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--card);
+    touch-action:none;
+  }
+  canvas.sig-pad{
+    width:100%;
+    height:150px;
+    display:block;
+    background:#fff;
+    touch-action:none;
+  }
+  .sig-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:6px;
+  }
+  .sig-actions button{
+    background:none;
+    border:none;
+    color:var(--blue-700);
+    font-size:.82rem;
+    cursor:pointer;
+    padding:4px 0;
+  }
+  .sig-empty-note{font-size:.78rem;color:var(--ink-soft);}
+
+  .solo-checks{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+  .solo-checks .field label{
+    font-weight:400;display:flex;gap:8px;align-items:flex-start;
+    cursor:pointer;padding:8px;margin:0 -8px;border-radius:8px;
+    transition:background .12s ease;
+  }
+  .solo-checks .field label:hover{background:var(--blue-100);}
+  .solo-checks .field label:active{background:var(--green-100);}
+  .solo-checks input{width:auto;margin-top:3px;flex-shrink:0;}
+
+  .nav-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:22px;
+  }
+  button.nav-btn{
+    flex:1;
+    padding:13px 14px;
+    border-radius:9px;
+    font-size:.94rem;
+    font-weight:600;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
+    cursor:pointer;
+  }
+  button.nav-btn.primary{
+    background:var(--blue-700);
+    border-color:var(--blue-700);
+    color:#fff;
+  }
+  button.nav-btn.primary:disabled{opacity:.5;cursor:not-allowed;}
+  button.nav-btn:active{transform:scale(.98);}
+
+  .error-msg{
+    color:var(--red-700);
+    font-size:.82rem;
+    margin-top:8px;
+    display:none;
+  }
+  .error-msg.show{display:block;}
+
+  .summary-item{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:8px 0;
+    border-bottom:1px solid var(--line);
+    font-size:.86rem;
+  }
+  .summary-item span:first-child{color:var(--ink-soft);}
+  .summary-item span:last-child{font-weight:600;text-align:right;}
+
+  .final-actions{text-align:center;margin-top:20px;}
+  .final-actions .big-check{font-size:2.2rem;margin-bottom:6px;}
+  .final-actions p{color:var(--ink-soft);font-size:.9rem;margin-bottom:18px;}
+  #sendEmailBtn{
+    width:100%;
+    padding:14px;
+    border-radius:9px;
+    background:var(--blue-700);
+    color:#fff;
+    border:none;
+    font-size:1rem;
+    font-weight:700;
+    cursor:pointer;
+  }
+  #sendEmailBtn:disabled{opacity:.6;cursor:wait;}
+  #emailSentNote{
+    display:none;
+    margin-top:14px;
+    font-size:.85rem;
+    color:var(--green-700);
+    background:var(--green-100);
+    border:1px solid var(--green-border);
+    padding:10px 12px;
+    border-radius:8px;
+  }
+  #downloadBtn{
+    width:100%;
+    padding:11px;
+    border-radius:9px;
+    background:none;
+    color:var(--blue-700);
+    border:1px solid var(--line);
+    font-size:.88rem;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:10px;
+  }
+  #downloadedNote{
+    display:none;
+    margin-top:14px;
+    font-size:.85rem;
+    color:var(--green-700);
+    background:var(--green-100);
+    border:1px solid var(--green-border);
+    padding:10px 12px;
+    border-radius:8px;
+  }
+  #downloadBtn:disabled{opacity:.6;cursor:wait;}
+
+  .reassurance-msg{
+    font-size:.82rem;
+    color:var(--ink-soft);
+    background:var(--blue-100);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    margin:14px 0 4px;
+    text-align:center;
+  }
+  .alt-send-divider{
+    text-align:center;
+    font-size:.8rem;
+    color:var(--ink-soft);
+    margin:22px 0 10px;
+    position:relative;
+  }
+  .alt-send-divider:before{
+    content:'';
+    display:block;
+    border-top:1px solid var(--line);
+    margin-bottom:10px;
+  }
+  .mailto-btn{
+    display:block;
+    width:100%;
+    box-sizing:border-box;
+    text-align:center;
+    padding:11px;
+    border-radius:9px;
+    background:none;
+    color:var(--blue-700);
+    border:1px solid var(--line);
+    font-size:.88rem;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:10px;
+    text-decoration:none;
+  }
+
+  /* ---- Gabarit d'impression : reproduction fidèle du document original ---- */
+</style>
+
+<style>
+  /* ===== Sélecteur de langue (style aligné sur le site principal) ===== */
+  .langBar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    justify-content:center;
+    margin-bottom:16px;
+  }
+  .langBtn{
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
+    padding:6px 10px;
+    border-radius:999px;
+    cursor:pointer;
+    font-size:.78rem;
+    font-weight:700;
+    line-height:1;
+  }
+  .langBtn:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);}
+  .langBtn.active{background:var(--blue-100);border-color:var(--blue-700);color:var(--blue-900);}
+
+  .pdf-note{
+    text-align:center;
+    font-size:.76rem;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin:-10px 0 18px;
+  }
+
+  /* ===== RTL (arabe, pachto, kurde) ===== */
+  html[dir="rtl"] body{direction:rtl;text-align:right;}
+  html[dir="rtl"] .field label{text-align:right;}
+  html[dir="rtl"] .sig-actions{flex-direction:row-reverse;}
+  html[dir="rtl"] .choice-btn{text-align:center;}
+  html[dir="rtl"] .sub-hint{margin-left:0;margin-right:24px;}
+  html[dir="rtl"] .nav-row{flex-direction:row-reverse;}
+  html[dir="rtl"] .summary-item{flex-direction:row-reverse;}
+  html[dir="rtl"] .carnet-option{flex-direction:row-reverse;}
+  html[dir="rtl"] .solo-checks .field label{flex-direction:row-reverse;}
+  html[dir="rtl"] .sub-check-line label{flex-direction:row-reverse;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="langBar" id="langBar"></div>
+  <div class="pdf-note" data-i18n="pdfNoteLang"></div>
+  <header class="page-head">
+    <h1 data-i18n="pageTitle"></h1>
+    <p data-i18n="pageSubtitle"></p>
+  </header>
+
+  <div class="stepper" id="stepper"></div>
+  <div class="step-label" id="stepLabelLine"></div>
+
+  <div class="card">
+    <form id="vaccForm" novalidate>
+
+      <!-- Étape 1 : enfant -->
+      <section class="step active" data-step="1">
+        <h2 class="section-title" data-i18n="step1Title"></h2>
+        <div class="row2">
+          <div class="field">
+            <label for="childLastName" data-i18n="childLastNameLabel"></label>
+            <input type="text" id="childLastName" required>
+          </div>
+          <div class="field">
+            <label for="childFirstName" data-i18n="childFirstNameLabel"></label>
+            <input type="text" id="childFirstName" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="childDob" data-i18n="childDobLabel"></label>
+            <input type="date" id="childDob" required>
+          </div>
+          <div class="field">
+            <label for="childSex" data-i18n="childSexLabel"></label>
+            <select id="childSex" required>
+              <option value="" data-i18n="sexSelectPlaceholder"></option>
+              <option value="F" data-i18n="sexFemale"></option>
+              <option value="G" data-i18n="sexMale"></option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="childClass" data-i18n="childClassLabel"></label>
+          <input type="text" id="childClass" data-i18n-placeholder="childClassPlaceholder" required>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="schoolName" data-i18n="schoolNameLabel"></label>
+            <select id="schoolName" required></select>
+          </div>
+          <div class="field">
+            <label for="schoolTown" data-i18n="schoolTownLabel"></label>
+            <select id="schoolTown" required></select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Étape 2 : parents -->
+      <section class="step" data-step="2">
+        <h2 class="section-title" data-i18n="step2Title"></h2>
+
+        <div class="parent-block">
+          <h3 data-i18n="parent1Title"></h3>
+          <div class="field">
+            <label for="p1Name" data-i18n="nameLabel"></label>
+            <input type="text" id="p1Name" required>
+          </div>
+          <div class="field">
+            <label for="p1Phone" data-i18n="phoneLabel"></label>
+            <input type="tel" id="p1Phone" required>
+          </div>
+          <div class="field">
+            <label for="p1Nir" data-i18n="nirLabel"></label>
+            <input type="text" id="p1Nir" maxlength="15" data-i18n-placeholder="nirPlaceholder" required>
+          </div>
+        </div>
+
+        <div class="parent-block">
+          <h3><span data-i18n="parent2Title"></span> <span style="font-weight:400;color:var(--ink-soft);" data-i18n="optionalTag"></span></h3>
+          <div class="field">
+            <label for="p2Name" data-i18n="nameLabel"></label>
+            <input type="text" id="p2Name">
+          </div>
+          <div class="field">
+            <label for="p2Phone" data-i18n="phoneLabel"></label>
+            <input type="tel" id="p2Phone">
+          </div>
+          <div class="field">
+            <label for="p2Nir" data-i18n="nirLabel"></label>
+            <input type="text" id="p2Nir" maxlength="15" data-i18n-placeholder="nirPlaceholder">
+          </div>
+        </div>
+
+        <div class="field">
+          <label data-i18n="attachLabel"></label>
+          <div class="radio-line"><input type="radio" name="attach" value="1" id="attach1" required><label for="attach1" style="margin:0;font-weight:400;" data-i18n="parent1Title"></label></div>
+          <div class="radio-line"><input type="radio" name="attach" value="2" id="attach2"><label for="attach2" style="margin:0;font-weight:400;" data-i18n="parent2Title"></label></div>
+        </div>
+      </section>
+
+      <!-- Étape 3 : autorisations -->
+      <section class="step" data-step="3">
+        <h2 class="section-title" data-i18n="step3Title"></h2>
+
+        <div class="auth-block" id="blockHpv">
+          <div class="auth-title" data-i18n="hpvTitle"></div>
+          <div class="auth-sub" data-i18n="hpvSub"></div>
+          <div class="auth-choice">
+            <div class="choice-btn yes" data-group="hpv" data-value="yes" data-i18n="authYes"></div>
+            <div class="choice-btn no" data-group="hpv" data-value="no" data-i18n="authNo"></div>
+          </div>
+        </div>
+
+        <div class="auth-block" id="blockAcwy">
+          <div class="auth-title" data-i18n="acwyTitle"></div>
+          <div class="auth-sub" data-i18n="acwySub"></div>
+          <div class="auth-choice">
+            <div class="choice-btn yes" data-group="acwy" data-value="yes" data-i18n="authYes"></div>
+            <div class="choice-btn no" data-group="acwy" data-value="no" data-i18n="authNo"></div>
+          </div>
+        </div>
+
+        <div class="auth-block" id="blockOther">
+          <div class="auth-title" data-i18n="otherTitle"></div>
+          <div class="auth-sub" data-i18n="otherSub"></div>
+          <div class="auth-choice">
+            <div class="choice-btn yes" data-group="other" data-value="yes" data-i18n="authYes"></div>
+            <div class="choice-btn no" data-group="other" data-value="no" data-i18n="authNo"></div>
+          </div>
+          <div class="sub-checks" id="otherSub">
+            <div class="sub-check-line">
+              <label><input type="checkbox" id="subDtp"> <span data-i18n="dtpLabel"></span></label>
+              <div class="sub-hint" data-i18n="dtpHint"></div>
+            </div>
+            <div class="sub-check-line">
+              <label><input type="checkbox" id="subRor"> <span data-i18n="rorLabel"></span></label>
+              <div class="sub-hint" data-i18n="rorHint"></div>
+            </div>
+            <div class="sub-check-line">
+              <label><input type="checkbox" id="subHepb"> <span data-i18n="hepbLabel"></span></label>
+              <div class="sub-hint" data-i18n="hepbHint"></div>
+            </div>
+          </div>
+        </div>
+        <div class="error-msg" id="authError" data-i18n="authError"></div>
+      </section>
+
+      <!-- Étape 4 : carnet de santé -->
+      <section class="step" data-step="4">
+        <h2 class="section-title" data-i18n="step4Title"></h2>
+        <p style="font-size:.88rem;color:var(--ink-soft);margin-top:-6px;" data-i18n="carnetIntro"></p>
+        <label class="carnet-option" id="carnetOpt1">
+          <input type="radio" name="carnet" value="fourni" id="carnetFourni" required>
+          <span data-i18n="carnetFourni"></span>
+        </label>
+        <label class="carnet-option" id="carnetOpt2">
+          <input type="radio" name="carnet" value="absent" id="carnetAbsent">
+          <span data-i18n="carnetAbsent"></span>
+        </label>
+      </section>
+
+      <!-- Étape 5 : signatures -->
+      <section class="step" data-step="5">
+        <h2 class="section-title" data-i18n="step5Title"></h2>
+        <p style="font-size:.86rem;color:var(--ink-soft);margin-top:-6px;" data-i18n="signIntro"></p>
+
+        <div class="field">
+          <label for="signDate" data-i18n="dateLabel"></label>
+          <input type="date" id="signDate" required>
+        </div>
+
+        <div class="field">
+          <label data-i18n="sig1Label"></label>
+          <div class="sig-wrap"><canvas class="sig-pad" id="sig1"></canvas></div>
+          <div class="sig-actions">
+            <button type="button" onclick="clearSig(1)" data-i18n="clearBtn"></button>
+            <span class="sig-empty-note" id="sig1note" data-i18n="sigHint"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label><span data-i18n="sig2Label"></span> <span style="font-weight:400;color:var(--ink-soft);" data-i18n="optionalTag"></span></label>
+          <div class="sig-wrap"><canvas class="sig-pad" id="sig2"></canvas></div>
+          <div class="sig-actions">
+            <button type="button" onclick="clearSig(2)" data-i18n="clearBtn"></button>
+            <span class="sig-empty-note" id="sig2note" data-i18n="sigHint"></span>
+          </div>
+        </div>
+
+        <div class="solo-checks">
+          <div class="field">
+            <label><input type="checkbox" id="soloOnly"> <span data-i18n="soloOnlyLabel"></span></label>
+          </div>
+          <div class="field">
+            <label><input type="checkbox" id="soloAbsent"> <span data-i18n="soloAbsentLabel"></span></label>
+          </div>
+        </div>
+        <div class="error-msg" id="sigError" data-i18n="sigError"></div>
+      </section>
+
+      <!-- Étape 6 : récapitulatif -->
+      <section class="step" data-step="6">
+        <h2 class="section-title" data-i18n="step6Title"></h2>
+        <div id="summaryList"></div>
+        <div class="reassurance-msg" data-i18n="reassuranceMsg"></div>
+        <div class="final-actions">
+          <button type="button" id="sendEmailBtn" data-i18n="sendBtn"></button>
+          <div id="emailSentNote" data-i18n="emailSentNote"></div>
+
+          <div class="alt-send-divider"><span data-i18n="emailAltIntro"></span></div>
+          <button type="button" id="downloadBtn" data-i18n="downloadBtn"></button>
+          <div id="downloadedNote" data-i18n="downloadedNote"></div>
+          <a href="#" id="mailtoBtn" class="mailto-btn" data-i18n="emailAltBtn"></a>
+        </div>
+      </section>
+
+    </form>
+
+    <div class="nav-row">
+      <button type="button" class="nav-btn" id="prevBtn" data-i18n="prevBtn"></button>
+      <button type="button" class="nav-btn primary" id="nextBtn" data-i18n="nextBtn"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+const I18N = {"fr": {"dir": "ltr", "langName": "Français", "pageTitle": "Autorisation parentale pour la vaccination contre les papillomavirus humains (HPV) et/ou contre les méningites à méningocoque ACWY", "pageSubtitle": "Remplissez le formulaire étape par étape, puis signez et transmettez-le.", "stepOf": "sur", "stepNames": ["Enfant", "Parents", "Autorisations", "Carnet de santé", "Signatures", "Récapitulatif"], "step1Title": "Informations sur l'enfant", "childLastNameLabel": "Nom de l'enfant", "childFirstNameLabel": "Prénom de l'enfant", "childDobLabel": "Date de naissance", "childSexLabel": "Sexe", "sexSelectPlaceholder": "Sélectionner", "sexFemale": "Fille", "sexMale": "Garçon", "childClassLabel": "Classe scolaire", "childClassPlaceholder": "ex. 5ème B", "schoolNameLabel": "Nom du collège", "schoolTownLabel": "Commune du collège", "step2Title": "Informations sur les parents / responsables légaux", "parent1Title": "Parent / Responsable légal 1", "parent2Title": "Parent / Responsable légal 2", "optionalTag": "(si applicable)", "nameLabel": "Nom et prénom", "phoneLabel": "Téléphone portable", "nirLabel": "Numéro de sécurité sociale", "nirPlaceholder": "(15 chiffres requis)", "attachLabel": "Numéro de sécurité sociale de rattachement de l'enfant", "step3Title": "Autorisations à cocher", "hpvTitle": "Vaccination contre les infections HPV (Gardasil9®)", "hpvSub": "Nécessite 2 doses espacées de 5 à 13 mois lorsqu'elle est réalisée entre 11 et 14 ans.", "acwyTitle": "Vaccination contre les méningites à méningocoque ACWY", "acwySub": "Une seule dose. À refaire pour les enfants déjà vaccinés contre les méningocoques C ou ACWY avant l'âge de 11 ans. Spécialité choisie par l'équipe médicale (Nimenrix®, MenQuadfi® ou Menveo®).", "otherTitle": "Vaccination contre les autres maladies recommandées par le calendrier vaccinal en vigueur", "otherSub": "Si votre enfant est déjà à jour, il ne sera pas revacciné.", "authYes": "J'autorise", "authNo": "Je n'autorise pas", "dtpLabel": "Diphtérie, tétanos, poliomyélite, coqueluche (DTP-coq)", "dtpHint": "Rappel recommandé à 6 ans, puis entre 11 et 13 ans.", "rorLabel": "Rougeole, oreillons, rubéole (ROR)", "rorHint": "Deux doses recommandées à partir de 12 mois révolus.", "hepbLabel": "Hépatite B", "hepbHint": "Trois doses au total recommandées pour une protection à vie.", "authError": "Merci de répondre aux trois questions d'autorisation.", "step4Title": "Carnet de santé", "carnetIntro": "La présence du carnet de santé est essentielle pour analyser le statut vaccinal de votre enfant.", "carnetFourni": "Je m'engage à fournir le carnet de santé à mon enfant le jour de la vaccination.", "carnetAbsent": "Je ne peux pas fournir le carnet de santé et j'atteste que mon enfant n'a pas déjà été vacciné contre le HPV et la méningite ACWY.", "step5Title": "Signatures obligatoires", "signIntro": "La vaccination des mineurs nécessite l'autorisation des deux titulaires de l'autorité parentale, sauf déclaration ci-dessous.", "dateLabel": "Date", "sig1Label": "Signature — Parent/Responsable légal 1", "sig2Label": "Signature — Parent/Responsable légal 2", "clearBtn": "Effacer", "sigHint": "Signez avec le doigt ou la souris", "soloOnlyLabel": "Je déclare être le seul responsable légal de l'enfant.", "soloAbsentLabel": "Je déclare sur l'honneur que l'autre parent est empêché de signer mais a donné son autorisation.", "sigError": "Merci de renseigner la date et au moins une signature (ou de cocher une des déclarations ci-dessus).", "step6Title": "Récapitulatif", "sendBtn": "Transmettre le formulaire", "sendingLabel": "Envoi en cours…", "emailSentNote": "Le formulaire a bien été transmis à l'équipe vaccination.", "downloadBtn": "Télécharger une copie du PDF (test)", "generatingLabel": "Génération du PDF en cours…", "downloadedNote": "Le PDF a bien été généré et téléchargé.", "sendErrorAlert": "L'envoi a échoué ({detail}). Si vous testez depuis l'aperçu Claude, ce blocage est normal (réseau restreint) : réessayez depuis le fichier téléchargé ou le site publié. Sinon, vérifiez la configuration du flux, ou téléchargez le PDF en attendant.", "downloadErrorAlert": "Une erreur est survenue pendant la génération du PDF. Merci de réessayer, ou de signaler le problème si cela persiste.", "downloadFailAlert": "Le téléchargement n'a pas pu aboutir ({code}). Merci de réessayer.", "prevBtn": "Précédent", "nextBtn": "Suivant", "doneBtn": "Terminé", "pdfNoteLang": "Le document PDF officiel généré est toujours en français, quelle que soit la langue de ce formulaire.", "recapChild": "Enfant", "recapSchool": "Collège", "recapHpv": "Autorisation HPV", "recapAcwy": "Autorisation ACWY", "recapOther": "Autres vaccins", "recapCarnet": "Carnet de santé", "recapSignatures": "Signatures", "yes": "Oui", "no": "Non", "dash": "—", "carnetProvided": "Fourni le jour J", "carnetNotProvided": "Non fourni — attestation", "stepWord": "Étape", "latinOnlyHint": "À saisir en alphabet latin (le document officiel reste en français).", "reassuranceMsg": "Vous pensez avoir fait une erreur dans cette autorisation ? Pas de souci : il vous suffit de remplir et transmettre ce formulaire une nouvelle fois, sans démarche supplémentaire.", "emailAltIntro": "Vous préférez l'envoyer vous-même par email ?", "emailAltBtn": "Envoyer par email", "mailtoBodySubject": "Autorisation vaccination", "mailtoBodyText": "Bonjour,\n\nVeuillez trouver ci-joint l'autorisation de vaccination pour mon enfant.\n\nMerci de joindre le PDF que vous venez de télécharger depuis notre site avant d'envoyer ce message.\n\nCordialement"}, "en": {"dir": "ltr", "langName": "English", "pageTitle": "Parental authorization for vaccination against human papillomavirus (HPV) and/or meningococcal ACWY meningitis", "pageSubtitle": "Fill in the form step by step, then sign and submit it.", "stepOf": "of", "stepNames": ["Child", "Parents", "Authorizations", "Health record", "Signatures", "Summary"], "step1Title": "Information about the child", "childLastNameLabel": "Child's last name", "childFirstNameLabel": "Child's first name", "childDobLabel": "Date of birth", "childSexLabel": "Sex", "sexSelectPlaceholder": "Select", "sexFemale": "Girl", "sexMale": "Boy", "childClassLabel": "School class", "childClassPlaceholder": "e.g. 7th grade B", "schoolNameLabel": "School name", "schoolTownLabel": "School town", "step2Title": "Information about the parents / legal guardians", "parent1Title": "Parent / Legal guardian 1", "parent2Title": "Parent / Legal guardian 2", "optionalTag": "(if applicable)", "nameLabel": "Full name", "phoneLabel": "Mobile phone", "nirLabel": "Social security number", "nirPlaceholder": "(15 digits required)", "attachLabel": "Social security number the child is registered under", "step3Title": "Authorizations to complete", "hpvTitle": "Vaccination against HPV infections (Gardasil9®)", "hpvSub": "Requires 2 doses spaced 5 to 13 months apart when given between ages 11 and 14.", "acwyTitle": "Vaccination against meningococcal ACWY meningitis", "acwySub": "A single dose. Must be repeated for children already vaccinated against meningococcus C or ACWY before age 11. The vaccine brand is chosen by the medical team (Nimenrix®, MenQuadfi® or Menveo®).", "otherTitle": "Vaccination against other diseases recommended by the current vaccination schedule", "otherSub": "If your child is already up to date, they will not be revaccinated.", "authYes": "I authorize", "authNo": "I do not authorize", "dtpLabel": "Diphtheria, tetanus, polio, pertussis (DTaP)", "dtpHint": "Booster recommended at age 6, then between ages 11 and 13.", "rorLabel": "Measles, mumps, rubella (MMR)", "rorHint": "Two doses recommended from 12 months of age.", "hepbLabel": "Hepatitis B", "hepbHint": "Three doses in total recommended for lifelong protection.", "authError": "Please answer all three authorization questions.", "step4Title": "Health record", "carnetIntro": "The health record is essential to assess your child's vaccination status.", "carnetFourni": "I commit to bringing my child's health record on the day of vaccination.", "carnetAbsent": "I cannot provide the health record and I certify that my child has not already been vaccinated against HPV and ACWY meningitis.", "step5Title": "Required signatures", "signIntro": "Vaccination of minors requires the authorization of both holders of parental authority, unless declared otherwise below.", "dateLabel": "Date", "sig1Label": "Signature — Parent/Legal guardian 1", "sig2Label": "Signature — Parent/Legal guardian 2", "clearBtn": "Clear", "sigHint": "Sign with your finger or mouse", "soloOnlyLabel": "I declare that I am the sole legal guardian of the child.", "soloAbsentLabel": "I declare on my honor that the other parent is unable to sign but has given their consent.", "sigError": "Please fill in the date and at least one signature (or tick one of the declarations above).", "step6Title": "Summary", "sendBtn": "Submit the form", "sendingLabel": "Sending…", "emailSentNote": "The form has been successfully submitted to the vaccination team.", "downloadBtn": "Download a copy of the PDF (test)", "generatingLabel": "Generating the PDF…", "downloadedNote": "The PDF has been generated and downloaded.", "sendErrorAlert": "Sending failed ({detail}). If you're testing from the Claude preview, this is expected (restricted network): retry from the downloaded file or the published site. Otherwise, check the flow's configuration, or download the PDF in the meantime.", "downloadErrorAlert": "An error occurred while generating the PDF. Please try again, or report the issue if it persists.", "downloadFailAlert": "The download could not complete ({code}). Please try again.", "prevBtn": "Back", "nextBtn": "Next", "doneBtn": "Done", "pdfNoteLang": "The official PDF document generated is always in French, regardless of this form's display language.", "recapChild": "Child", "recapSchool": "School", "recapHpv": "HPV authorization", "recapAcwy": "ACWY authorization", "recapOther": "Other vaccines", "recapCarnet": "Health record", "recapSignatures": "Signatures", "yes": "Yes", "no": "No", "dash": "—", "carnetProvided": "Provided on the day", "carnetNotProvided": "Not provided — certification", "stepWord": "Step", "latinOnlyHint": "Please enter using the Latin alphabet (the official document stays in French).", "reassuranceMsg": "Think you made a mistake on this form? No worries: simply fill in and submit this form again, no extra steps needed.", "emailAltIntro": "Prefer to send it yourself by email?", "emailAltBtn": "Send by email", "mailtoBodySubject": "Vaccination authorization", "mailtoBodyText": "Hello,\n\nPlease find attached the vaccination authorization for my child.\n\nPlease attach the PDF you just downloaded from our site before sending this message.\n\nKind regards"}, "ar": {"dir": "rtl", "langName": "العربية", "pageTitle": "إذن الوالدين للتلقيح ضد فيروس الورم الحليمي البشري (HPV) و/أو ضد التهاب السحايا بالمكورات السحائية ACWY", "pageSubtitle": "املأ الاستمارة خطوة بخطوة، ثم وقّع وأرسلها.", "stepOf": "من", "stepNames": ["الطفل", "الوالدان", "التصريحات", "دفتر الصحة", "التوقيعات", "الملخص"], "step1Title": "معلومات عن الطفل", "childLastNameLabel": "اسم عائلة الطفل", "childFirstNameLabel": "الاسم الشخصي للطفل", "childDobLabel": "تاريخ الميلاد", "childSexLabel": "الجنس", "sexSelectPlaceholder": "اختر", "sexFemale": "بنت", "sexMale": "ولد", "childClassLabel": "الصف الدراسي", "childClassPlaceholder": "مثال: الصف الخامس ب", "schoolNameLabel": "اسم المدرسة الإعدادية", "schoolTownLabel": "بلدية المدرسة", "step2Title": "معلومات عن الوالدين / الأوصياء القانونيين", "parent1Title": "الوالد / الوصي القانوني 1", "parent2Title": "الوالد / الوصي القانوني 2", "optionalTag": "(إن وُجد)", "nameLabel": "الاسم الكامل", "phoneLabel": "الهاتف المحمول", "nirLabel": "رقم الضمان الاجتماعي", "nirPlaceholder": "(15 رقمًا مطلوبة)", "attachLabel": "رقم الضمان الاجتماعي الذي يتبع له الطفل", "step3Title": "التصريحات المطلوب تحديدها", "hpvTitle": "التلقيح ضد فيروس HPV (Gardasil9®)", "hpvSub": "يتطلب جرعتين بفاصل 5 إلى 13 شهرًا عند إجرائه بين سن 11 و14 عامًا.", "acwyTitle": "التلقيح ضد التهاب السحايا بالمكورات السحائية ACWY", "acwySub": "جرعة واحدة فقط. يجب إعادته للأطفال الذين سبق تلقيحهم ضد المكورات السحائية C أو ACWY قبل سن 11 عامًا. يختار الفريق الطبي نوع اللقاح (Nimenrix®، أو MenQuadfi®، أو Menveo®).", "otherTitle": "التلقيح ضد الأمراض الأخرى الموصى بها في جدول التلقيح الساري", "otherSub": "إذا كان طفلكم محدّثًا بالفعل، فلن يُعاد تلقيحه.", "authYes": "أوافق", "authNo": "لا أوافق", "dtpLabel": "الدفتيريا، الكزاز، شلل الأطفال، السعال الديكي (DTP-coq)", "dtpHint": "تُنصح جرعة تذكيرية في سن 6 سنوات، ثم بين 11 و13 عامًا.", "rorLabel": "الحصبة، النكاف، الحصبة الألمانية (ROR)", "rorHint": "يوصى بجرعتين ابتداءً من سن 12 شهرًا كاملة.", "hepbLabel": "التهاب الكبد B", "hepbHint": "يوصى بثلاث جرعات إجمالًا لحماية مدى الحياة.", "authError": "يرجى الإجابة عن أسئلة التصريح الثلاثة.", "step4Title": "دفتر الصحة", "carnetIntro": "وجود دفتر الصحة ضروري لتحليل الحالة التلقيحية لطفلكم.", "carnetFourni": "ألتزم بتقديم دفتر الصحة لطفلي يوم التلقيح.", "carnetAbsent": "لا يمكنني تقديم دفتر الصحة وأشهد أن طفلي لم يُلقَّح من قبل ضد HPV والتهاب السحايا ACWY.", "step5Title": "التوقيعات الإلزامية", "signIntro": "يتطلب تلقيح القصّر موافقة كلا حاملي السلطة الأبوية، ما لم يُذكر خلاف ذلك أدناه.", "dateLabel": "التاريخ", "sig1Label": "التوقيع — الوالد/الوصي القانوني 1", "sig2Label": "التوقيع — الوالد/الوصي القانوني 2", "clearBtn": "مسح", "sigHint": "وقّع بإصبعك أو بالفأرة", "soloOnlyLabel": "أصرّح بأنني الوصي القانوني الوحيد على الطفل.", "soloAbsentLabel": "أصرّح على شرفي بأن الوالد الآخر غير قادر على التوقيع لكنه أعطى موافقته.", "sigError": "يرجى تعبئة التاريخ وتوقيع واحد على الأقل (أو تحديد أحد التصريحين أعلاه).", "step6Title": "الملخص", "sendBtn": "إرسال الاستمارة", "sendingLabel": "جارٍ الإرسال…", "emailSentNote": "تم إرسال الاستمارة بنجاح إلى فريق التلقيح.", "downloadBtn": "تحميل نسخة من ملف PDF (اختبار)", "generatingLabel": "جارٍ إنشاء ملف PDF…", "downloadedNote": "تم إنشاء ملف PDF وتحميله بنجاح.", "sendErrorAlert": "فشل الإرسال ({detail}). إذا كنتم تختبرون من معاينة Claude، فهذا الحظر متوقع (شبكة مقيدة): أعيدوا المحاولة من الملف المحمّل أو من الموقع المنشور. وإلا، تحققوا من إعدادات النظام، أو حمّلوا ملف PDF في هذه الأثناء.", "downloadErrorAlert": "حدث خطأ أثناء إنشاء ملف PDF. يرجى إعادة المحاولة، أو الإبلاغ عن المشكلة إذا استمرت.", "downloadFailAlert": "تعذّر إتمام التحميل ({code}). يرجى إعادة المحاولة.", "prevBtn": "السابق", "nextBtn": "التالي", "doneBtn": "تم", "pdfNoteLang": "وثيقة PDF الرسمية المُنشأة تكون دائمًا باللغة الفرنسية، بغض النظر عن لغة عرض هذه الاستمارة.", "recapChild": "الطفل", "recapSchool": "المدرسة", "recapHpv": "تصريح HPV", "recapAcwy": "تصريح ACWY", "recapOther": "لقاحات أخرى", "recapCarnet": "دفتر الصحة", "recapSignatures": "التوقيعات", "yes": "نعم", "no": "لا", "dash": "—", "carnetProvided": "سيُقدَّم يوم التلقيح", "carnetNotProvided": "غير مقدَّم — شهادة", "stepWord": "الخطوة", "latinOnlyHint": "يُرجى الكتابة بالأحرف اللاتينية (تبقى الوثيقة الرسمية باللغة الفرنسية).", "reassuranceMsg": "هل تعتقدون أنكم ارتكبتم خطأً في هذا الإذن؟ لا داعي للقلق: يكفي أن تملأوا هذه الاستمارة وترسلوها مرة أخرى، دون أي إجراء إضافي.", "emailAltIntro": "تفضّلون إرسالها بأنفسكم عبر البريد الإلكتروني؟", "emailAltBtn": "الإرسال عبر البريد الإلكتروني", "mailtoBodySubject": "إذن التلقيح", "mailtoBodyText": "مرحبًا،\n\nتجدون طيه إذن التلقيح الخاص بطفلي.\n\nيرجى إرفاق ملف PDF الذي قمتم بتحميله للتو من موقعنا قبل إرسال هذه الرسالة.\n\nمع التحية"}, "tr": {"dir": "ltr", "langName": "Türkçe", "pageTitle": "İnsan papilloma virüsü (HPV) ve/veya meningokok ACWY menenjitine karşı aşılama için ebeveyn izni", "pageSubtitle": "Formu adım adım doldurun, ardından imzalayıp gönderin.", "stepOf": "/", "stepNames": ["Çocuk", "Ebeveynler", "İzinler", "Sağlık karnesi", "İmzalar", "Özet"], "step1Title": "Çocuk hakkında bilgiler", "childLastNameLabel": "Çocuğun soyadı", "childFirstNameLabel": "Çocuğun adı", "childDobLabel": "Doğum tarihi", "childSexLabel": "Cinsiyet", "sexSelectPlaceholder": "Seçiniz", "sexFemale": "Kız", "sexMale": "Erkek", "childClassLabel": "Sınıf", "childClassPlaceholder": "örn. 6. sınıf B", "schoolNameLabel": "Okulun adı", "schoolTownLabel": "Okulun bulunduğu şehir", "step2Title": "Ebeveynler / veliler hakkında bilgiler", "parent1Title": "Ebeveyn / Veli 1", "parent2Title": "Ebeveyn / Veli 2", "optionalTag": "(varsa)", "nameLabel": "Ad ve soyad", "phoneLabel": "Cep telefonu", "nirLabel": "Sosyal güvenlik numarası", "nirPlaceholder": "(15 hane gereklidir)", "attachLabel": "Çocuğun bağlı olduğu sosyal güvenlik numarası", "step3Title": "İşaretlenecek izinler", "hpvTitle": "HPV enfeksiyonlarına karşı aşılama (Gardasil9®)", "hpvSub": "11-14 yaş arasında yapıldığında 5 ila 13 ay arayla 2 doz gerektirir.", "acwyTitle": "Meningokok ACWY menenjitine karşı aşılama", "acwySub": "Tek doz yeterlidir. 11 yaşından önce meningokok C veya ACWY'ye karşı aşılanmış çocuklarda tekrarlanmalıdır. Aşı markası sağlık ekibi tarafından seçilir (Nimenrix®, MenQuadfi® veya Menveo®).", "otherTitle": "Güncel aşı takviminde önerilen diğer hastalıklara karşı aşılama", "otherSub": "Çocuğunuzun aşıları güncelse, tekrar aşılanmayacaktır.", "authYes": "İzin veriyorum", "authNo": "İzin vermiyorum", "dtpLabel": "Difteri, tetanos, çocuk felci, boğmaca (DTP-aşı)", "dtpHint": "6 yaşında, ardından 11-13 yaş arasında rapel önerilir.", "rorLabel": "Kızamık, kabakulak, kızamıkçık (KKK)", "rorHint": "12 aylıktan itibaren iki doz önerilir.", "hepbLabel": "Hepatit B", "hepbHint": "Ömür boyu koruma için toplam üç doz önerilir.", "authError": "Lütfen üç izin sorusunu da yanıtlayın.", "step4Title": "Sağlık karnesi", "carnetIntro": "Çocuğunuzun aşı durumunu değerlendirmek için sağlık karnesinin bulunması gereklidir.", "carnetFourni": "Aşı günü çocuğumun sağlık karnesini getirmeyi taahhüt ederim.", "carnetAbsent": "Sağlık karnesini sunamıyorum ve çocuğumun daha önce HPV ve ACWY menenjitine karşı aşılanmadığını beyan ederim.", "step5Title": "Zorunlu imzalar", "signIntro": "Reşit olmayanların aşılanması, aşağıda aksi belirtilmedikçe, ebeveyn yetkisine sahip her iki kişinin de iznini gerektirir.", "dateLabel": "Tarih", "sig1Label": "İmza — Ebeveyn/Veli 1", "sig2Label": "İmza — Ebeveyn/Veli 2", "clearBtn": "Temizle", "sigHint": "Parmağınızla veya fareyle imzalayın", "soloOnlyLabel": "Çocuğun tek yasal velisi olduğumu beyan ederim.", "soloAbsentLabel": "Diğer ebeveynin imza atamadığını ancak onay verdiğini onurum üzerine beyan ederim.", "sigError": "Lütfen tarihi ve en az bir imzayı doldurun (veya yukarıdaki beyanlardan birini işaretleyin).", "step6Title": "Özet", "sendBtn": "Formu gönder", "sendingLabel": "Gönderiliyor…", "emailSentNote": "Form aşı ekibine başarıyla iletildi.", "downloadBtn": "PDF kopyasını indir (test)", "generatingLabel": "PDF oluşturuluyor…", "downloadedNote": "PDF oluşturuldu ve indirildi.", "sendErrorAlert": "Gönderim başarısız oldu ({detail}). Claude önizlemesinden test ediyorsanız bu normaldir (kısıtlı ağ): indirilen dosyadan veya yayınlanan siteden tekrar deneyin. Aksi halde akış yapılandırmasını kontrol edin veya bu arada PDF'yi indirin.", "downloadErrorAlert": "PDF oluşturulurken bir hata oluştu. Lütfen tekrar deneyin veya sorun devam ederse bildirin.", "downloadFailAlert": "İndirme tamamlanamadı ({code}). Lütfen tekrar deneyin.", "prevBtn": "Geri", "nextBtn": "İleri", "doneBtn": "Tamamlandı", "pdfNoteLang": "Oluşturulan resmi PDF belgesi, bu formun görüntülenme dili ne olursa olsun her zaman Fransızca olur.", "recapChild": "Çocuk", "recapSchool": "Okul", "recapHpv": "HPV izni", "recapAcwy": "ACWY izni", "recapOther": "Diğer aşılar", "recapCarnet": "Sağlık karnesi", "recapSignatures": "İmzalar", "yes": "Evet", "no": "Hayır", "dash": "—", "carnetProvided": "Aşı günü getirilecek", "carnetNotProvided": "Getirilmedi — beyan", "stepWord": "Adım", "latinOnlyHint": "Lütfen Latin alfabesiyle yazın (resmi belge Fransızca kalır).", "reassuranceMsg": "Bu formda bir hata yaptığınızı mı düşünüyorsunuz? Endişelenmeyin: formu tekrar doldurup göndermeniz yeterli, başka bir işlem gerekmiyor.", "emailAltIntro": "Kendiniz e-posta ile göndermeyi mi tercih edersiniz?", "emailAltBtn": "E-posta ile gönder", "mailtoBodySubject": "Aşı izni", "mailtoBodyText": "Merhaba,\n\nÇocuğuma ait aşı iznini ekte bulabilirsiniz.\n\nBu mesajı göndermeden önce sitemizden az önce indirdiğiniz PDF'yi eklemeyi unutmayın.\n\nSaygılarımla"}, "ps": {"dir": "rtl", "langName": "پښتو", "pageTitle": "د انسان پاپیلوما ویروس (HPV) او/یا د مننژیت ACWY په وړاندې د واکسین لپاره د والدینو اجازه", "pageSubtitle": "فورمه یو په یو ډکه کړئ، بیا یې لاسلیک کړئ او ولېږئ.", "stepOf": "له", "stepNames": ["ماشوم", "والدین", "اجازې", "روغتیايي کارت", "لاسلیکونه", "لنډیز"], "step1Title": "د ماشوم په اړه معلومات", "childLastNameLabel": "د ماشوم فامیلي نوم", "childFirstNameLabel": "د ماشوم شخصي نوم", "childDobLabel": "د زیږون نېټه", "childSexLabel": "جنسیت", "sexSelectPlaceholder": "وټاکئ", "sexFemale": "نجلۍ", "sexMale": "هلک", "childClassLabel": "ښوونیز ټولګی", "childClassPlaceholder": "بېلګه: ۵م ټولګی ب", "schoolNameLabel": "د ښوونځي نوم", "schoolTownLabel": "د ښوونځي ښار", "step2Title": "د والدینو / قانوني سرپرستانو په اړه معلومات", "parent1Title": "والد / قانوني سرپرست 1", "parent2Title": "والد / قانوني سرپرست 2", "optionalTag": "(که شتون ولري)", "nameLabel": "بشپړ نوم", "phoneLabel": "د لاس تلیفون", "nirLabel": "د ټولنیز تامین شمېره", "nirPlaceholder": "(۱۵ عددونه اړین دي)", "attachLabel": "هغه ټولنیز تامین شمېره چې ماشوم ورسره تړلی دی", "step3Title": "اجازې چې باید ولیکل شي", "hpvTitle": "د HPV په وړاندې واکسین (Gardasil9®)", "hpvSub": "کله چې د ۱۱ او ۱۴ کلونو ترمنځ ترسره کېږي، ۵ تر ۱۳ میاشتو تر منځ فاصله لرونکي ۲ دوزونه ته اړتیا لري.", "acwyTitle": "د مننژیت ACWY په وړاندې واکسین", "acwySub": "یوازې یوه دوزه. د هغو ماشومانو لپاره چې مخکې یې د ۱۱ کلنۍ دمخه د مننژیت C یا ACWY واکسین اخیستی وي، بیا باید ترسره شي. د واکسین ډول د طبي ټیم لخوا ټاکل کېږي (Nimenrix®، MenQuadfi® یا Menveo®).", "otherTitle": "د اوسني واکسین مهالوېش لخوا وړاندیز شویو نورو ناروغیو په وړاندې واکسین", "otherSub": "که ستاسو ماشوم دمخه اوسنی وي، بیا به ونه واکسین شي.", "authYes": "اجازه ورکوم", "authNo": "اجازه نه ورکوم", "dtpLabel": "دیفتریا، کزاز، شلل، سیاه‌سرفه (DTP-coq)", "dtpHint": "په ۶ کلنۍ کې، بیا د ۱۱ او ۱۳ کلونو ترمنځ یادونې دوز وړاندیز کېږي.", "rorLabel": "سرخکان، ممپس، سرخچه (ROR)", "rorHint": "له ۱۲ میاشتو راهیسې دوه دوزې وړاندیز کېږي.", "hepbLabel": "د ځیګر التهاب B", "hepbHint": "د ټول عمر خوندیتوب لپاره درې دوزې وړاندیز کېږي.", "authError": "مهرباني وکړئ درې واړه د اجازې پوښتنو ته ځواب ورکړئ.", "step4Title": "روغتیايي کارت", "carnetIntro": "د روغتیايي کارت شتون ستاسو ماشوم د واکسین حالت د ارزولو لپاره اړین دی.", "carnetFourni": "زه ژمنه کوم چې د واکسین په ورځ به د خپل ماشوم روغتیايي کارت وړاندې کړم.", "carnetAbsent": "زه نشم کولی روغتیايي کارت وړاندې کړم او شاهدي ورکوم چې زما ماشوم مخکې د HPV او ACWY مننژیت په وړاندې نه دی واکسین شوی.", "step5Title": "اړین لاسلیکونه", "signIntro": "د نابالغانو واکسین د والدینې واک د دواړو لرونکو اجازې ته اړتیا لري، پرته له لاندې اعلان څخه.", "dateLabel": "نېټه", "sig1Label": "لاسلیک — والد/قانوني سرپرست 1", "sig2Label": "لاسلیک — والد/قانوني سرپرست 2", "clearBtn": "پاکول", "sigHint": "د ګوتې یا موږکي په مرسته لاسلیک وکړئ", "soloOnlyLabel": "زه اعلانوم چې د ماشوم یوازینی قانوني سرپرست یم.", "soloAbsentLabel": "زه پر خپل شرف اعلانوم چې بل والد د لاسلیک کولو توان نه لري خو خپله رضایت یې ورکړی دی.", "sigError": "مهرباني وکړئ نېټه او لږ تر لږه یو لاسلیک ډک کړئ (یا له پورتنیو اعلانونو څخه یو وټاکئ).", "step6Title": "لنډیز", "sendBtn": "فورمه ولېږئ", "sendingLabel": "لېږل کېږي…", "emailSentNote": "فورمه په بریالیتوب سره واکسین ټیم ته ولېږل شوه.", "downloadBtn": "د PDF یوه کاپي ډاونلوډ کړئ (ازموینه)", "generatingLabel": "PDF جوړېږي…", "downloadedNote": "PDF جوړ او ډاونلوډ شو.", "sendErrorAlert": "لېږل ناکام شول ({detail}). که تاسو د Claude له مخکتنې څخه ازموینه کوئ، دا معمول دی (محدود شبکه): له ډاونلوډ شوي فایل یا خپاره شوي پاڼې څخه بیا هڅه وکړئ. که نه نو د بهیر تنظیمات وګورئ، یا تر هغه وخته PDF ډاونلوډ کړئ.", "downloadErrorAlert": "د PDF جوړولو پر مهال کومه ستونزه رامنځته شوه. مهرباني وکړئ بیا هڅه وکړئ، یا که ستونزه دوام ولري راپور ورکړئ.", "downloadFailAlert": "ډاونلوډ بشپړ نشو ({code}). مهرباني وکړئ بیا هڅه وکړئ.", "prevBtn": "مخکینی", "nextBtn": "راتلونکی", "doneBtn": "بشپړ شو", "pdfNoteLang": "جوړ شوی رسمي PDF سند تل په فرانسوي ژبه وي، پرته د دې فورمې د ښودنې له ژبې.", "recapChild": "ماشوم", "recapSchool": "ښوونځی", "recapHpv": "د HPV اجازه", "recapAcwy": "د ACWY اجازه", "recapOther": "نور واکسینونه", "recapCarnet": "روغتیايي کارت", "recapSignatures": "لاسلیکونه", "yes": "هو", "no": "نه", "dash": "—", "carnetProvided": "به د واکسین په ورځ وړاندې شي", "carnetNotProvided": "وړاندې نشو — شاهدي لیک", "stepWord": "پړاو", "latinOnlyHint": "مهرباني وکړئ په لاتین الفبا ولیکئ (رسمي سند به فرانسوي پاتې شي).", "reassuranceMsg": "فکر کوئ چې پدې اجازه کې مو کومه تېروتنه کړې ده؟ اندېښنه مه کوئ: یوازې بیا دا فورمه ډکه او ولېږئ، بل کوم اضافي کار ته اړتیا نشته.", "emailAltIntro": "غواړئ پخپله یې د بریښنالیک له لارې ولېږئ؟", "emailAltBtn": "د بریښنالیک له لارې ولېږئ", "mailtoBodySubject": "د واکسین اجازه", "mailtoBodyText": "سلام،\n\nمهرباني وکړئ د خپل ماشوم د واکسین اجازه ضمیمه وګورئ.\n\nمهرباني وکړئ مخکې لدې چې دا پیغام ولېږئ، هغه PDF چې اوس مو زموږ له سایټ څخه ډاونلوډ کړی دی، ضمیمه کړئ.\n\nپه درنښت"}, "ku": {"dir": "rtl", "langName": "کوردی", "pageTitle": "ڕەزامەندیی دایک و باوک بۆ ڤاکسینی دژی ڤایرۆسی پاپیلۆمای مرۆیی (HPV) و/یان مننژیتی مێنینگۆکۆک ACWY", "pageSubtitle": "فۆرمەکە هەنگاو بە هەنگاو پڕ بکەوە، پاشان واژووی بکە و بینێرە.", "stepOf": "لە", "stepNames": ["منداڵ", "دایک و باوک", "ڕەزامەندییەکان", "کارتی تەندروستی", "واژووەکان", "کورتەیەک"], "step1Title": "زانیاری دەربارەی منداڵ", "childLastNameLabel": "ناوی خێزانی منداڵ", "childFirstNameLabel": "ناوی کەسیی منداڵ", "childDobLabel": "بەرواری لەدایکبوون", "childSexLabel": "ڕەگەز", "sexSelectPlaceholder": "هەڵبژێرە", "sexFemale": "کچ", "sexMale": "کوڕ", "childClassLabel": "پۆلی خوێندن", "childClassPlaceholder": "نموونە: پۆلی 5 ب", "schoolNameLabel": "ناوی قوتابخانە", "schoolTownLabel": "شاری قوتابخانە", "step2Title": "زانیاری دەربارەی دایک و باوک / سەرپەرشتیارانی یاسایی", "parent1Title": "دایک/باوک یان سەرپەرشتیاری یاسایی 1", "parent2Title": "دایک/باوک یان سەرپەرشتیاری یاسایی 2", "optionalTag": "(ئەگەر بوونی هەبێت)", "nameLabel": "ناوی تەواو", "phoneLabel": "مۆبایل", "nirLabel": "ژمارەی دابینکردنی کۆمەڵایەتی", "nirPlaceholder": "(15 ژمارە پێویستە)", "attachLabel": "ژمارەی دابینکردنی کۆمەڵایەتی کە منداڵەکە پێوەی بەستراوەتەوە", "step3Title": "ڕەزامەندییەکان کە دەبێت پڕ بکرێنەوە", "hpvTitle": "ڤاکسینی دژی HPV (Gardasil9®)", "hpvSub": "کاتێک لە نێوان تەمەنی 11 و 14 ساڵدا ئەنجام دەدرێت، پێویستی بە 2 دۆز هەیە بە دوورایی 5 تا 13 مانگ.", "acwyTitle": "ڤاکسینی دژی مننژیتی مێنینگۆکۆک ACWY", "acwySub": "تەنها یەک دۆز. بۆ منداڵانێک کە پێشتر دژی مێنینگۆکۆک C یان ACWY پێش تەمەنی 11 ساڵ ڤاکسین کراون، دەبێت دووبارە بکرێتەوە. جۆری ڤاکسین لەلایەن تیمی پزیشکییەوە هەڵدەبژێردرێت (Nimenrix®، MenQuadfi®، یان Menveo®).", "otherTitle": "ڤاکسینی دژی نەخۆشیەکانی تر کە لە بەرنامەی ڤاکسینی ئێستادا پێشنیارکراون", "otherSub": "ئەگەر منداڵەکەتان پێشتر ڤاکسینەکانی تەواو بێت، دووبارە ڤاکسین ناکرێتەوە.", "authYes": "ڕەزامەندی دەدەم", "authNo": "ڕەزامەندی نادەم", "dtpLabel": "دیفتریا، کزاز، فەلەجی مناڵان، کۆکی رەشە (DTP-coq)", "dtpHint": "دۆزی بیرخستنەوە لە تەمەنی 6 ساڵیدا، پاشان لە نێوان 11 و 13 ساڵدا پێشنیارکراوە.", "rorLabel": "سورەخاڵ، ئۆرەیشکە، سورەخاڵی ئەڵمانی (ROR)", "rorHint": "دوو دۆز لە تەمەنی 12 مانگییەوە پێشنیارکراوە.", "hepbLabel": "نەخۆشی جگەری جۆری B", "hepbHint": "سێ دۆز بە گشتی بۆ پاراستنی هەموو ژیان پێشنیارکراوە.", "authError": "تکایە وەڵامی هەر سێ پرسیارەکانی ڕەزامەندی بدەرەوە.", "step4Title": "کارتی تەندروستی", "carnetIntro": "بوونی کارتی تەندروستی گرنگە بۆ هەڵسەنگاندنی دۆخی ڤاکسینکردنی منداڵەکەتان.", "carnetFourni": "بەڵێن دەدەم کە لە ڕۆژی ڤاکسینکردندا کارتی تەندروستی منداڵەکەم بهێنم.", "carnetAbsent": "ناتوانم کارتی تەندروستی پێشکەش بکەم و شایەتی دەدەم کە منداڵەکەم پێشتر دژی HPV و مننژیتی ACWY ڤاکسین نەکراوە.", "step5Title": "واژووە پێویستەکان", "signIntro": "ڤاکسینکردنی منداڵانی لەژێر تەمەن پێویستی بە ڕەزامەندیی هەردوو خاوەن دەسەڵاتی دایک‌وباوکی هەیە، مەگەر خلاف ئەوە لە خوارەوە ڕابگەیەنرێت.", "dateLabel": "بەروار", "sig1Label": "واژوو — دایک/باوک یان سەرپەرشتیاری یاسایی 1", "sig2Label": "واژوو — دایک/باوک یان سەرپەرشتیاری یاسایی 2", "clearBtn": "سڕینەوە", "sigHint": "بە پەنجە یان مائوس واژوو بکە", "soloOnlyLabel": "ڕادەگەیەنم کە بە تەنها سەرپەرشتیاری یاسایی منداڵەکەم.", "soloAbsentLabel": "بە شەرەفی خۆم ڕادەگەیەنم کە دایک/باوکی تر ناتوانێت واژوو بکات بەڵام ڕەزامەندیی خۆی داوە.", "sigError": "تکایە بەروار و لانیکەم یەک واژوو پڕ بکەوە (یان یەکێک لە ڕاگەیاندنەکانی سەرەوە هەڵبژێرە).", "step6Title": "کورتەیەک", "sendBtn": "فۆرمەکە بنێرە", "sendingLabel": "دەنێردرێت…", "emailSentNote": "فۆرمەکە بە سەرکەوتووی بۆ تیمی ڤاکسین نێردرا.", "downloadBtn": "کۆپیایەک لە PDF دابگرە (تاقیکردنەوە)", "generatingLabel": "PDF دروست دەکرێت…", "downloadedNote": "PDF دروستکرا و دابەزێنرا.", "sendErrorAlert": "ناردن شکستی هێنا ({detail}). ئەگەر لە پێشبینینی Claude تاقی دەکەیتەوە، ئەمە ئاسایی و چاوەڕوانکراوە (تۆڕی سنووردار): لە فایلی دابەزێنراو یان ماڵپەڕی بڵاوکراوەوە دووبارە هەوڵ بدەوە. یان سازکاری تیمەکە بپشکنە، یان لەم ماوەیەدا PDF دابگرە.", "downloadErrorAlert": "هەڵەیەک لە کاتی دروستکردنی PDF ڕوویدا. تکایە دووبارە هەوڵ بدەوە، یان ئەگەر بەردەوام بوو ڕایبگەیەنە.", "downloadFailAlert": "دابەزاندن تەواو نەبوو ({code}). تکایە دووبارە هەوڵ بدەوە.", "prevBtn": "پێشوو", "nextBtn": "دواتر", "doneBtn": "تەواو بوو", "pdfNoteLang": "بەڵگەنامەی فەرمی PDF کە دروستکراوە هەمیشە بە زمانی فەرەنسییە، سەرباری زمانی نیشاندانی ئەم فۆرمە.", "recapChild": "منداڵ", "recapSchool": "قوتابخانە", "recapHpv": "ڕەزامەندیی HPV", "recapAcwy": "ڕەزامەندیی ACWY", "recapOther": "ڤاکسینەکانی تر", "recapCarnet": "کارتی تەندروستی", "recapSignatures": "واژووەکان", "yes": "بەڵێ", "no": "نەخێر", "dash": "—", "carnetProvided": "لە ڕۆژی ڤاکسینکردندا دەهێنرێت", "carnetNotProvided": "نەهێنراوە — شایەتی‌نامە", "stepWord": "هەنگاو", "latinOnlyHint": "تکایە بە ئەلفوبێی لاتینی بنووسە (بەڵگەنامەی فەرمی بە فەرەنسی دەمێنێتەوە).", "reassuranceMsg": "پێت وایە هەڵەیەکت لەم ڕەزامەندییەدا کردووە؟ خەمت نەبێت: تەنها ئەم فۆرمە دووبارە پڕبکەوە و بینێرە، هیچ هەنگاوێکی زیاتر پێویست نییە.", "emailAltIntro": "دەتەوێت خۆت بە ئیمەیڵ بینێریت؟", "emailAltBtn": "بە ئیمەیڵ بینێرە", "mailtoBodySubject": "ڕەزامەندیی ڤاکسین", "mailtoBodyText": "سڵاو،\n\nتکایە ڕەزامەندیی ڤاکسینی منداڵەکەم لەگەڵ ئەم نامەیەدا ببینن.\n\nتکایە پێش ناردنی ئەم نامەیە، ئەو PDF-ەی کە ئێستا لە ماڵپەڕەکەمان دایگرتووە زیاد بکە.\n\nڕێزداران"}, "ro": {"dir": "ltr", "langName": "Română", "pageTitle": "Autorizație parentală pentru vaccinarea împotriva papilomavirusului uman (HPV) și/sau a meningitei meningococice ACWY", "pageSubtitle": "Completați formularul pas cu pas, apoi semnați și transmiteți-l.", "stepOf": "din", "stepNames": ["Copil", "Părinți", "Autorizații", "Carnet de sănătate", "Semnături", "Recapitulare"], "step1Title": "Informații despre copil", "childLastNameLabel": "Numele copilului", "childFirstNameLabel": "Prenumele copilului", "childDobLabel": "Data nașterii", "childSexLabel": "Sex", "sexSelectPlaceholder": "Selectați", "sexFemale": "Fată", "sexMale": "Băiat", "childClassLabel": "Clasa", "childClassPlaceholder": "ex. clasa a V-a B", "schoolNameLabel": "Numele colegiului", "schoolTownLabel": "Localitatea colegiului", "step2Title": "Informații despre părinți / reprezentanții legali", "parent1Title": "Părinte / Reprezentant legal 1", "parent2Title": "Părinte / Reprezentant legal 2", "optionalTag": "(dacă este cazul)", "nameLabel": "Nume și prenume", "phoneLabel": "Telefon mobil", "nirLabel": "Numărul de securitate socială", "nirPlaceholder": "(sunt necesare 15 cifre)", "attachLabel": "Numărul de securitate socială de care aparține copilul", "step3Title": "Autorizații de completat", "hpvTitle": "Vaccinarea împotriva infecțiilor HPV (Gardasil9®)", "hpvSub": "Necesită 2 doze la interval de 5 până la 13 luni, atunci când este efectuată între 11 și 14 ani.", "acwyTitle": "Vaccinarea împotriva meningitei meningococice ACWY", "acwySub": "O singură doză. Trebuie repetată pentru copiii deja vaccinați împotriva meningococului C sau ACWY înainte de vârsta de 11 ani. Tipul de vaccin este ales de echipa medicală (Nimenrix®, MenQuadfi® sau Menveo®).", "otherTitle": "Vaccinarea împotriva altor boli recomandate de calendarul de vaccinare în vigoare", "otherSub": "Dacă vaccinurile copilului dumneavoastră sunt deja la zi, acesta nu va fi revaccinat.", "authYes": "Autorizez", "authNo": "Nu autorizez", "dtpLabel": "Difterie, tetanos, poliomielită, tuse convulsivă (DTP)", "dtpHint": "Rapel recomandat la 6 ani, apoi între 11 și 13 ani.", "rorLabel": "Rujeolă, oreion, rubeolă (ROR)", "rorHint": "Două doze recomandate începând cu vârsta de 12 luni împlinite.", "hepbLabel": "Hepatita B", "hepbHint": "Trei doze în total recomandate pentru o protecție pe viață.", "authError": "Vă rugăm să răspundeți la toate cele trei întrebări de autorizare.", "step4Title": "Carnet de sănătate", "carnetIntro": "Prezența carnetului de sănătate este esențială pentru a evalua statusul vaccinal al copilului dumneavoastră.", "carnetFourni": "Mă angajez să aduc carnetul de sănătate al copilului meu în ziua vaccinării.", "carnetAbsent": "Nu pot furniza carnetul de sănătate și atest că copilul meu nu a fost deja vaccinat împotriva HPV și a meningitei ACWY.", "step5Title": "Semnături obligatorii", "signIntro": "Vaccinarea minorilor necesită autorizarea ambilor titulari ai autorității părintești, cu excepția declarației de mai jos.", "dateLabel": "Data", "sig1Label": "Semnătură — Părinte/Reprezentant legal 1", "sig2Label": "Semnătură — Părinte/Reprezentant legal 2", "clearBtn": "Șterge", "sigHint": "Semnați cu degetul sau cu mouse-ul", "soloOnlyLabel": "Declar că sunt singurul reprezentant legal al copilului.", "soloAbsentLabel": "Declar pe onoare că celălalt părinte este în imposibilitate de a semna, dar și-a dat acordul.", "sigError": "Vă rugăm să completați data și cel puțin o semnătură (sau să bifați una dintre declarațiile de mai sus).", "step6Title": "Recapitulare", "sendBtn": "Trimiteți formularul", "sendingLabel": "Se trimite…", "emailSentNote": "Formularul a fost transmis cu succes echipei de vaccinare.", "downloadBtn": "Descărcați o copie a PDF-ului (test)", "generatingLabel": "Se generează PDF-ul…", "downloadedNote": "PDF-ul a fost generat și descărcat.", "sendErrorAlert": "Trimiterea a eșuat ({detail}). Dacă testați din previzualizarea Claude, acest blocaj este normal (rețea restricționată): reîncercați din fișierul descărcat sau din site-ul publicat. În caz contrar, verificați configurația fluxului sau descărcați PDF-ul între timp.", "downloadErrorAlert": "A apărut o eroare la generarea PDF-ului. Vă rugăm să reîncercați sau să semnalați problema dacă persistă.", "downloadFailAlert": "Descărcarea nu a putut fi finalizată ({code}). Vă rugăm să reîncercați.", "prevBtn": "Înapoi", "nextBtn": "Următorul", "doneBtn": "Finalizat", "pdfNoteLang": "Documentul PDF oficial generat este întotdeauna în limba franceză, indiferent de limba de afișare a acestui formular.", "recapChild": "Copil", "recapSchool": "Colegiu", "recapHpv": "Autorizație HPV", "recapAcwy": "Autorizație ACWY", "recapOther": "Alte vaccinuri", "recapCarnet": "Carnet de sănătate", "recapSignatures": "Semnături", "yes": "Da", "no": "Nu", "dash": "—", "carnetProvided": "Va fi adus în ziua respectivă", "carnetNotProvided": "Nefurnizat — declarație", "stepWord": "Etapa", "latinOnlyHint": "Vă rugăm să completați cu alfabetul latin (documentul oficial rămâne în franceză).", "reassuranceMsg": "Credeți că ați făcut o greșeală în această autorizație? Nu vă faceți griji: este suficient să completați și să transmiteți din nou acest formular, fără alt demers.", "emailAltIntro": "Preferați să îl trimiteți dumneavoastră prin email?", "emailAltBtn": "Trimiteți prin email", "mailtoBodySubject": "Autorizație de vaccinare", "mailtoBodyText": "Bună ziua,\n\nGăsiți atașată autorizația de vaccinare pentru copilul meu.\n\nVă rugăm să atașați PDF-ul pe care tocmai l-ați descărcat de pe site-ul nostru înainte de a trimite acest mesaj.\n\nCu stimă"}, "ka": {"dir": "ltr", "langName": "ქართული", "pageTitle": "მშობლის თანხმობა ადამიანის პაპილომავირუსის (HPV) და/ან მენინგოკოკური ACWY მენინგიტის საწინააღმდეგო ვაქცინაციაზე", "pageSubtitle": "შეავსეთ ფორმა ეტაპობრივად, შემდეგ მოაწერეთ ხელი და გაგზავნეთ.", "stepOf": "დან", "stepNames": ["ბავშვი", "მშობლები", "თანხმობები", "ჯანმრთელობის ბარათი", "ხელმოწერები", "შეჯამება"], "step1Title": "ინფორმაცია ბავშვის შესახებ", "childLastNameLabel": "ბავშვის გვარი", "childFirstNameLabel": "ბავშვის სახელი", "childDobLabel": "დაბადების თარიღი", "childSexLabel": "სქესი", "sexSelectPlaceholder": "აირჩიეთ", "sexFemale": "გოგონა", "sexMale": "ბიჭი", "childClassLabel": "სასკოლო კლასი", "childClassPlaceholder": "მაგ. V კლასი B", "schoolNameLabel": "კოლეჯის დასახელება", "schoolTownLabel": "კოლეჯის ქალაქი", "step2Title": "ინფორმაცია მშობლების / კანონიერი წარმომადგენლების შესახებ", "parent1Title": "მშობელი / კანონიერი წარმომადგენელი 1", "parent2Title": "მშობელი / კანონიერი წარმომადგენელი 2", "optionalTag": "(საჭიროების შემთხვევაში)", "nameLabel": "სახელი და გვარი", "phoneLabel": "მობილური ტელეფონი", "nirLabel": "სოციალური დაზღვევის ნომერი", "nirPlaceholder": "(საჭიროა 15 ციფრი)", "attachLabel": "სოციალური დაზღვევის ნომერი, რომელზეც ბავშვია დამოკიდებული", "step3Title": "შესავსები თანხმობები", "hpvTitle": "ვაქცინაცია HPV ინფექციების წინააღმდეგ (Gardasil9®)", "hpvSub": "საჭიროებს 2 დოზას 5-დან 13 თვემდე ინტერვალით, როდესაც ტარდება 11-დან 14 წლამდე ასაკში.", "acwyTitle": "ვაქცინაცია მენინგოკოკური ACWY მენინგიტის წინააღმდეგ", "acwySub": "მხოლოდ ერთი დოზა. უნდა გამეორდეს იმ ბავშვებისთვის, რომლებიც უკვე აცრილი იყვნენ მენინგოკოკ C-ის ან ACWY-ის წინააღმდეგ 11 წლამდე ასაკში. ვაქცინის სახეობას ირჩევს სამედიცინო გუნდი (Nimenrix®, MenQuadfi® ან Menveo®).", "otherTitle": "ვაქცინაცია მოქმედი ვაქცინაციის კალენდრით რეკომენდებული სხვა დაავადებების წინააღმდეგ", "otherSub": "თუ თქვენი შვილის ვაქცინები უკვე განახლებულია, იგი ხელახლა არ აიცრება.", "authYes": "ვეთანხმები", "authNo": "არ ვეთანხმები", "dtpLabel": "დიფტერია, ტეტანუსი, პოლიომიელიტი, ყივანახველა (DTP)", "dtpHint": "რევაქცინაცია რეკომენდებულია 6 წლის ასაკში, შემდეგ 11-დან 13 წლამდე.", "rorLabel": "წითელა, ყბაყურა, წითურა (ROR)", "rorHint": "ორი დოზა რეკომენდებულია 12 თვის ასაკიდან.", "hepbLabel": "B ჰეპატიტი", "hepbHint": "სულ სამი დოზაა რეკომენდებული უვადო დაცვისთვის.", "authError": "გთხოვთ უპასუხოთ სამივე თანხმობის კითხვას.", "step4Title": "ჯანმრთელობის ბარათი", "carnetIntro": "ჯანმრთელობის ბარათის არსებობა აუცილებელია თქვენი შვილის ვაქცინაციის სტატუსის შესაფასებლად.", "carnetFourni": "ვალდებულებას ვიღებ, ვაქცინაციის დღეს წარვადგინო ჩემი შვილის ჯანმრთელობის ბარათი.", "carnetAbsent": "ვერ წარვადგენ ჯანმრთელობის ბარათს და ვადასტურებ, რომ ჩემი შვილი აქამდე არ ყოფილა აცრილი HPV-ისა და ACWY მენინგიტის წინააღმდეგ.", "step5Title": "სავალდებულო ხელმოწერები", "signIntro": "არასრულწლოვნების ვაქცინაცია მოითხოვს მშობლის უფლებამოსილების ორივე მფლობელის თანხმობას, გარდა ქვემოთ მითითებული დეკლარაციისა.", "dateLabel": "თარიღი", "sig1Label": "ხელმოწერა — მშობელი/კანონიერი წარმომადგენელი 1", "sig2Label": "ხელმოწერა — მშობელი/კანონიერი წარმომადგენელი 2", "clearBtn": "გასუფთავება", "sigHint": "მოაწერეთ ხელი თითით ან მაუსით", "soloOnlyLabel": "ვაცხადებ, რომ ვარ ბავშვის ერთადერთი კანონიერი წარმომადგენელი.", "soloAbsentLabel": "საპატიო სიტყვას ვაძლევ, რომ მეორე მშობელს არ შეუძლია ხელმოწერა, მაგრამ მისცა თანხმობა.", "sigError": "გთხოვთ შეავსოთ თარიღი და მინიმუმ ერთი ხელმოწერა (ან მონიშნოთ ერთ-ერთი ზემოთ მოცემული დეკლარაცია).", "step6Title": "შეჯამება", "sendBtn": "ფორმის გაგზავნა", "sendingLabel": "იგზავნება…", "emailSentNote": "ფორმა წარმატებით გაეგზავნა ვაქცინაციის გუნდს.", "downloadBtn": "PDF-ის ასლის ჩამოტვირთვა (ტესტი)", "generatingLabel": "PDF-ის გენერირება…", "downloadedNote": "PDF შეიქმნა და ჩამოიტვირთა.", "sendErrorAlert": "გაგზავნა ვერ მოხერხდა ({detail}). თუ ტესტავთ Claude-ის გადახედვიდან, ეს ბლოკირება ნორმალურია (შეზღუდული ქსელი): სცადეთ ხელახლა ჩამოტვირთული ფაილიდან ან გამოქვეყნებული საიტიდან. წინააღმდეგ შემთხვევაში, შეამოწმეთ ნაკადის კონფიგურაცია ან ამასობაში ჩამოტვირთეთ PDF.", "downloadErrorAlert": "PDF-ის გენერირებისას შეცდომა მოხდა. გთხოვთ სცადოთ ხელახლა, ან შეატყობინოთ პრობლემის შესახებ თუ გაგრძელდება.", "downloadFailAlert": "ჩამოტვირთვა ვერ დასრულდა ({code}). გთხოვთ სცადოთ ხელახლა.", "prevBtn": "უკან", "nextBtn": "შემდეგი", "doneBtn": "დასრულებულია", "pdfNoteLang": "გენერირებული ოფიციალური PDF დოკუმენტი ყოველთვის ფრანგულ ენაზეა, ამ ფორმის ჩვენების ენის მიუხედავად.", "recapChild": "ბავშვი", "recapSchool": "კოლეჯი", "recapHpv": "HPV თანხმობა", "recapAcwy": "ACWY თანხმობა", "recapOther": "სხვა ვაქცინები", "recapCarnet": "ჯანმრთელობის ბარათი", "recapSignatures": "ხელმოწერები", "yes": "კი", "no": "არა", "dash": "—", "carnetProvided": "წარმოდგენილი იქნება იმ დღეს", "carnetNotProvided": "არ არის წარმოდგენილი — დეკლარაცია", "stepWord": "ეტაპი", "latinOnlyHint": "გთხოვთ შეიყვანოთ ლათინური ანბანით (ოფიციალური დოკუმენტი ფრანგულ ენაზე რჩება).", "reassuranceMsg": "ფიქრობთ, რომ შეცდომა დაუშვით ამ თანხმობაში? არაუშავს: უბრალოდ კვლავ შეავსეთ და გაგზავნეთ ეს ფორმა, დამატებითი მოქმედება საჭირო არ არის.", "emailAltIntro": "გირჩევნიათ თავად გაგზავნოთ ელფოსტით?", "emailAltBtn": "გაგზავნა ელფოსტით", "mailtoBodySubject": "ვაქცინაციის თანხმობა", "mailtoBodyText": "გამარჯობა,\n\nგადმოგზავნით ჩემი შვილის ვაქცინაციის თანხმობას.\n\nგთხოვთ, ამ შეტყობინების გაგზავნამდე დაურთოთ PDF, რომელიც ახლახან ჩამოტვირთეთ ჩვენი საიტიდან.\n\nპატივისცემით"}};
+
+const SUPPORTED_LANGS = ["fr","en","ar","tr","ps","ku","ro","ka"];
+function detectInitialLang(){
+  try{
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = params.get('lang');
+    if(fromUrl && SUPPORTED_LANGS.includes(fromUrl)) return fromUrl;
+  }catch(e){}
+  return 'fr';
+}
+let currentLang = detectInitialLang();
+
+function tr(key){
+  const dict = I18N[currentLang] || I18N.fr;
+  return (dict && dict[key] !== undefined) ? dict[key] : (I18N.fr[key] || '');
+}
+
+function buildLangBar(){
+  const bar = document.getElementById('langBar');
+  bar.innerHTML = '';
+  SUPPORTED_LANGS.forEach(code=>{
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'langBtn' + (code===currentLang ? ' active' : '');
+    b.textContent = I18N[code].langName;
+    b.addEventListener('click', ()=>{
+      if(code === currentLang) return;
+      currentLang = code;
+      applyLanguage();
+    });
+    bar.appendChild(b);
+  });
+}
+
+function applyLanguage(){
+  const dict = I18N[currentLang] || I18N.fr;
+  document.documentElement.setAttribute('lang', currentLang);
+  document.documentElement.setAttribute('dir', dict.dir);
+  document.title = dict.pageTitle;
+
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    const val = tr(key);
+    if(val) el.textContent = val;
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-placeholder');
+    const val = tr(key);
+    if(val) el.setAttribute('placeholder', val);
+  });
+
+  buildLangBar();
+  renderStepper();
+
+  // Rafraîchit le texte "Sélectionner" des menus collège/commune dans la nouvelle langue,
+  // en conservant le filtre commune en cours (si un collège est déjà choisi)
+  const currentCommune = document.getElementById('schoolTown').value;
+  populateCommuneSelect();
+  populateCollegeSelect(currentCommune || null);
+
+  if(current === totalSteps) buildSummary();
+}
+
+const totalSteps = 6;
+let current = 1;
+
+const stepperEl = document.getElementById('stepper');
+for(let i=1;i<=totalSteps;i++){
+  const d = document.createElement('div');
+  d.className = 'dot';
+  d.id = 'dot'+i;
+  stepperEl.appendChild(d);
+}
+
+function renderStepper(){
+  const dict = I18N[currentLang] || I18N.fr;
+  for(let i=1;i<=totalSteps;i++){
+    const d = document.getElementById('dot'+i);
+    d.className = 'dot' + (i<current?' done':'') + (i===current?' active':'');
+  }
+  document.getElementById('stepLabelLine').innerHTML =
+    `${dict.stepWord} <strong>${current}</strong> ${dict.stepOf} ${totalSteps} — ${dict.stepNames[current-1]}`;
+  document.getElementById('prevBtn').style.visibility = current===1 ? 'hidden' : 'visible';
+  document.getElementById('nextBtn').textContent = current===totalSteps ? dict.doneBtn : dict.nextBtn;
+  document.getElementById('nextBtn').style.display = current===totalSteps ? 'none' : 'block';
+}
+
+function showStep(n){
+  document.querySelectorAll('.step').forEach(s=>{
+    s.classList.toggle('active', parseInt(s.dataset.step)===n);
+  });
+  renderStepper();
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n===5){
+    // le canvas de signature a une taille nulle tant qu'il est caché (display:none) ;
+    // on force son recalcul de taille une fois l'étape affichée
+    requestAnimationFrame(()=>{ pad1.refresh(); pad2.refresh(); });
+  }
+}
+
+
+// ---- Autorisation choice buttons ----
+const authState = {hpv:null, acwy:null, other:null};
+const blockByGroup = {hpv:'blockHpv', acwy:'blockAcwy', other:'blockOther'};
+document.querySelectorAll('.choice-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const group = btn.dataset.group;
+    const value = btn.dataset.value;
+    document.querySelectorAll(`.choice-btn[data-group="${group}"]`).forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    authState[group] = value;
+    markInvalid(document.getElementById(blockByGroup[group]), false);
+    if(group==='other'){
+      document.getElementById('otherSub').classList.toggle('show', value==='yes');
+    }
+  });
+});
+
+// ---- Carnet options highlight ----
+document.querySelectorAll('.carnet-option input').forEach(r=>{
+  r.addEventListener('change', ()=>{
+    document.querySelectorAll('.carnet-option').forEach(o=>{
+      o.classList.remove('selected');
+      markInvalid(o, false);
+    });
+    r.closest('.carnet-option').classList.add('selected');
+  });
+});
+
+// ---- Rattachement NSS : retire le surlignage dès qu'un choix est fait ----
+document.querySelectorAll('input[name="attach"]').forEach(r=>{
+  r.addEventListener('change', ()=>{
+    document.querySelectorAll('input[name="attach"]').forEach(x=>markInvalid(x.closest('.radio-line'), false));
+  });
+});
+
+// ---- Zones cliquables élargies : toute la ligne "radio-line" (rattachement NSS) réagit au clic ----
+document.querySelectorAll('.radio-line').forEach(row=>{
+  row.addEventListener('click', (e)=>{
+    if(e.target.tagName === 'INPUT' || e.target.tagName === 'LABEL') return;
+    const input = row.querySelector('input');
+    if(input){ input.checked = true; input.dispatchEvent(new Event('change', {bubbles:true})); }
+  });
+});
+
+// ---- Listes déroulantes Collège / Commune, avec filtrage croisé ----
+// [commune, collège] — liste fournie par le GHSIF (Sud Seine-et-Marne)
+const SCHOOLS = [["Avon", "de la Vallée"], ["Bois-le-Roi", "Denecourt"], ["Bray-sur-Seine", "Jean Rostand"], ["Brie-Comte-Robert", "Georges Brassens"], ["Brie-Comte-Robert", "Arthur Chaussy"], ["Brie-Comte-Robert", "Sainte-Colombe"], ["Cesson", "Le Grand Parc"], ["Champagne-sur-Seine", "Fernand Gregh"], ["Château-Landon", "Pierre Roux"], ["Combs-la-Ville", "Cités Unies"], ["Combs-la-Ville", "Les aulnes"], ["Coubert", "Marie Amélie Le Fur"], ["Dammarie-lès-Lys", "Robert Doisneau"], ["Dammarie-lès-Lys", "Georges Politzer"], ["Donnemarie-Dontilly", "Du Montois"], ["Fontainebleau", "Lucien Cézard"], ["Fontainebleau", "International"], ["Fontainebleau", "Jeanne d'Arc St Aspais"], ["Fontenay-Trésigny", "Stéphane Mallarmé"], ["Jouy-le-Châtel", "Jean-Jacques Barbaud"], ["La Chapelle-la-Reine", "Blanche de Castille"], ["Le Châtelet-en-Brie", "Rosa Bonheur"], ["Le Mée-sur-Seine", "Jean de la Fontaine"], ["Le Mée-sur-Seine", "Elsa Triolet"], ["Lésigny", "Les Hyverneaux"], ["Lieusaint", "De la Pyramide"], ["Lieusaint", "Saint Louis"], ["Lorrez Le Bocage Préaux", "Jacques Prévert"], ["Melun", "Sainte Marie"], ["Melun", "Frédéric Chopin"], ["Melun", "Jacques Amyot"], ["Melun", "Institution Jeanne d'Arc"], ["Melun", "Pierre Brossolette"], ["Melun", "Les Capucins"], ["Moissy-Cramayel", "La Boëtie"], ["Moissy-Cramayel", "Les Maillettes"], ["Montereau-F-Y", "Pierre de Montereau"], ["Montereau-F-Y", "André Malraux"], ["Montereau-F-Y", "Paul Eluard"], ["Moret Loing et Orvannes", "Alfred Sisley"], ["Mormant", "Nicolas Fouquet"], ["Nandy", "Robert Buron"], ["Nangis", "René Barthélémy"], ["Nemours", "Honoré de Balzac"], ["Nemours", "Arthur Rimbaud"], ["Perthes", "Christine de Pisan"], ["Provins", "Sainte Croix"], ["Provins", "Lelorgne de Savigny"], ["Provins", "Jules Verne"], ["Provins", "Marie Curie"], ["Rozay-en-Brie", "Les Remparts"], ["Savigny-le-Temple", "La Grange du Bois"], ["Savigny-le-Temple", "Henri Wallon"], ["Savigny-le-Temple", "Louis Armand"], ["Souppes sur Loing", "Emile Chevallier"], ["Sourdun", "Internat d'Excellence"], ["St Fargeau-Ponthierry", "Madeleine Brès"], ["St Fargeau-Ponthierry", "François Villon"], ["St Pierre-lès-Nemours", "Vasco de Gama"], ["St Pierre-lès-Nemours", "Sainte Marie"], ["Varennes-sur-Seine", "Elsa Triolet"], ["Vaux-le-Pénil", "La Mare aux Champs"], ["Verneuil-l'Etang", "Charles Peguy"], ["Vert Saint-Denis", "Jean Vilar"], ["Villiers-St-Georges", "Les Tournelles"], ["Voisenon", "Nazareth"], ["Vulaines-sur-Seine", "Colonel Arnaud Beltrame"]];
+
+function collegeCounts(){
+  const counts = {};
+  SCHOOLS.forEach(([,college])=>{ counts[college] = (counts[college]||0) + 1; });
+  return counts;
+}
+const COLLEGE_NAME_COUNTS = collegeCounts();
+
+function populateCommuneSelect(){
+  const sel = document.getElementById('schoolTown');
+  const prevVal = sel.value;
+  const communes = [...new Set(SCHOOLS.map(([c])=>c))].sort((a,b)=>a.localeCompare(b,'fr'));
+  sel.innerHTML = `<option value="">${tr('sexSelectPlaceholder')}</option>` +
+    communes.map(c=>`<option value="${c}">${c}</option>`).join('');
+  if(communes.includes(prevVal)) sel.value = prevVal;
+}
+
+function populateCollegeSelect(filterCommune){
+  const sel = document.getElementById('schoolName');
+  const prevVal = sel.value;
+  let list = filterCommune ? SCHOOLS.filter(([c])=>c===filterCommune) : SCHOOLS.slice();
+  list = list.slice().sort((a,b)=>a[1].localeCompare(b[1],'fr'));
+  sel.innerHTML = `<option value="">${tr('sexSelectPlaceholder')}</option>` +
+    list.map(([commune,college])=>{
+      const label = (!filterCommune && COLLEGE_NAME_COUNTS[college] > 1) ? `${college} (${commune})` : college;
+      return `<option value="${college}" data-commune="${commune}">${label}</option>`;
+    }).join('');
+  if(list.some(([,college])=>college===prevVal)) sel.value = prevVal;
+}
+
+document.getElementById('schoolTown').addEventListener('change', ()=>{
+  const commune = document.getElementById('schoolTown').value;
+  populateCollegeSelect(commune || null);
+  markInvalid(document.getElementById('schoolTown'), false);
+});
+
+document.getElementById('schoolName').addEventListener('change', ()=>{
+  const sel = document.getElementById('schoolName');
+  const opt = sel.selectedOptions[0];
+  const commune = opt ? opt.dataset.commune : '';
+  if(commune){
+    document.getElementById('schoolTown').value = commune;
+    populateCollegeSelect(commune);
+    markInvalid(document.getElementById('schoolTown'), false);
+  }
+  markInvalid(sel, false);
+});
+
+populateCommuneSelect();
+populateCollegeSelect(null);
+
+// ---- Champs numériques stricts : téléphone et numéro de sécurité sociale (chiffres uniquement) ----
+['p1Phone','p2Phone','p1Nir','p2Nir'].forEach(id=>{
+  const el = document.getElementById(id);
+  el.addEventListener('input', ()=>{
+    const digitsOnly = el.value.replace(/[^0-9]/g, '');
+    if(digitsOnly !== el.value) el.value = digitsOnly;
+  });
+  el.setAttribute('inputmode', 'numeric');
+});
+
+// ---- Champs de noms : alphabet latin uniquement (le PDF final reste toujours en français) ----
+// Autorise lettres latines (accentuées incluses), espaces, tirets, apostrophes.
+const LATIN_NAME_RE = /[^A-Za-zÀ-ÖØ-öø-ÿ' \-]/g;
+['childLastName','childFirstName','p1Name','p2Name'].forEach(id=>{
+  const el = document.getElementById(id);
+  el.addEventListener('input', ()=>{
+    const cleaned = el.value.replace(LATIN_NAME_RE, '');
+    if(cleaned !== el.value) el.value = cleaned;
+  });
+});
+
+// ---- Signature pads ----
+function setupPad(id){
+  const canvas = document.getElementById(id);
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let hasDrawn = false;
+
+  function resize(){
+    const ratio = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+    ctx.scale(ratio, ratio);
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#0b3d5c';
+  }
+  resize();
+  function resizePreserving(){
+    const data = hasDrawn ? canvas.toDataURL() : null;
+    resize();
+    if(data){
+      const img = new Image();
+      img.onload = ()=> ctx.drawImage(img,0,0,canvas.getBoundingClientRect().width,canvas.getBoundingClientRect().height);
+      img.src = data;
+    }
+  }
+  window.addEventListener('resize', resizePreserving);
+
+  function pos(e){
+    const rect = canvas.getBoundingClientRect();
+    const t = e.touches ? e.touches[0] : e;
+    return {x: t.clientX - rect.left, y: t.clientY - rect.top};
+  }
+  function start(e){ drawing = true; hasDrawn = true; markInvalid(canvas.closest('.sig-wrap'), false); const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault(); }
+  function move(e){ if(!drawing) return; const p = pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault(); }
+  function end(){ drawing = false; }
+
+  canvas.addEventListener('mousedown', start);
+  canvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', end);
+  canvas.addEventListener('touchstart', start, {passive:false});
+  canvas.addEventListener('touchmove', move, {passive:false});
+  canvas.addEventListener('touchend', end);
+
+  return {
+    clear(){ ctx.clearRect(0,0,canvas.width,canvas.height); hasDrawn = false; },
+    isEmpty(){ return !hasDrawn; },
+    dataUrl(){ return canvas.toDataURL('image/png'); },
+    refresh(){ resizePreserving(); }
+  };
+}
+const pad1 = setupPad('sig1');
+const pad2 = setupPad('sig2');
+function clearSig(n){ (n===1?pad1:pad2).clear(); }
+
+// ---- Validation per step ----
+function markInvalid(el, invalid){
+  if(!el) return;
+  el.classList.toggle('field-invalid', !!invalid);
+}
+function clearInvalidOnChange(el){
+  if(!el) return;
+  const clear = () => markInvalid(el, false);
+  el.addEventListener('input', clear);
+  el.addEventListener('change', clear);
+}
+// Les champs texte/select retirent leur surlignage rouge dès que l'utilisateur les modifie
+['childLastName','childFirstName','childDob','childSex','childClass','schoolName','schoolTown',
+ 'p1Name','p1Phone','p1Nir','p2Nir','signDate'].forEach(id => clearInvalidOnChange(document.getElementById(id)));
+
+function validateStep(n){
+  if(n===1){
+    const ids = ['childLastName','childFirstName','childDob','childSex','childClass','schoolName','schoolTown'];
+    let ok = true;
+    ids.forEach(id=>{
+      const el = document.getElementById(id);
+      const empty = el.value.trim() === '';
+      markInvalid(el, empty);
+      if(empty) ok = false;
+    });
+    return ok;
+  }
+  if(n===2){
+    const attach = document.querySelector('input[name="attach"]:checked');
+    const p1Name = document.getElementById('p1Name');
+    const p1Phone = document.getElementById('p1Phone');
+    const p1Nir = document.getElementById('p1Nir');
+    const p2Nir = document.getElementById('p2Nir');
+    const p1NirOk = p1Nir.value.length === 15;
+    const p2NirOk = p2Nir.value.length === 0 || p2Nir.value.length === 15;
+    markInvalid(p1Name, p1Name.value.trim()==='');
+    markInvalid(p1Phone, p1Phone.value.trim()==='');
+    markInvalid(p1Nir, !p1NirOk);
+    markInvalid(p2Nir, !p2NirOk);
+    document.querySelectorAll('input[name="attach"]').forEach(r=>{
+      markInvalid(r.closest('.radio-line'), !attach);
+    });
+    return p1Name.value.trim() !== '' &&
+           p1Phone.value.trim() !== '' &&
+           p1NirOk && p2NirOk &&
+           !!attach;
+  }
+  if(n===3){
+    const ok = authState.hpv && authState.acwy && authState.other;
+    document.getElementById('authError').classList.toggle('show', !ok);
+    ['blockHpv','blockAcwy','blockOther'].forEach((id,i)=>{
+      const states = [authState.hpv, authState.acwy, authState.other];
+      markInvalid(document.getElementById(id), !states[i]);
+    });
+    return !!ok;
+  }
+  if(n===4){
+    const checked = document.querySelector('input[name="carnet"]:checked');
+    document.querySelectorAll('.carnet-option').forEach(o=>markInvalid(o, !checked));
+    return !!checked;
+  }
+  if(n===5){
+    const signDateEl = document.getElementById('signDate');
+    const dateOk = signDateEl.value.trim() !== '';
+    const soloOnly = document.getElementById('soloOnly').checked;
+    const soloAbsent = document.getElementById('soloAbsent').checked;
+    const sig1ok = !pad1.isEmpty();
+    const sig2ok = !pad2.isEmpty();
+    const ok = dateOk && sig1ok && (sig2ok || soloOnly || soloAbsent);
+    document.getElementById('sigError').classList.toggle('show', !ok);
+    markInvalid(signDateEl, !dateOk);
+    markInvalid(document.getElementById('sig1').closest('.sig-wrap'), !sig1ok);
+    return ok;
+  }
+  return true;
+}
+
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  if(!validateStep(current)) return;
+  if(current < totalSteps){
+    current++;
+    if(current===totalSteps) buildSummary();
+    showStep(current);
+  }
+});
+document.getElementById('prevBtn').addEventListener('click', ()=>{
+  if(current>1){ current--; showStep(current); }
+});
+
+function labelYesNo(v){
+  const dict = I18N[currentLang] || I18N.fr;
+  return v==='yes' ? dict.yes : (v==='no' ? dict.no : dict.dash);
+}
+
+function buildSummary(){
+  const dict = I18N[currentLang] || I18N.fr;
+  const other = [];
+  if(document.getElementById('subDtp').checked) other.push('DTP-coq');
+  if(document.getElementById('subRor').checked) other.push('ROR');
+  if(document.getElementById('subHepb').checked) other.push('Hépatite B');
+
+  const items = [
+    [dict.recapChild, `${document.getElementById('childFirstName').value} ${document.getElementById('childLastName').value}`],
+    [dict.recapSchool, `${document.getElementById('schoolName').value} (${document.getElementById('schoolTown').value})`],
+    [dict.recapHpv, labelYesNo(authState.hpv)],
+    [dict.recapAcwy, labelYesNo(authState.acwy)],
+    [dict.recapOther, labelYesNo(authState.other) + (other.length ? " — " + other.join(', ') : '')],
+    [dict.recapCarnet, document.getElementById('carnetFourni').checked ? dict.carnetProvided : dict.carnetNotProvided],
+    [dict.recapSignatures, (!pad1.isEmpty()?"1 ✓ ":"") + (!pad2.isEmpty()?"2 ✓":"")]
+  ];
+  const el = document.getElementById('summaryList');
+  el.innerHTML = items.map(([k,v])=>`<div class="summary-item"><span>${k}</span><span>${v}</span></div>`).join('');
+
+  updateMailtoBtn();
+}
+
+// ---- Bouton alternatif : ouvre l'application email avec sujet/corps pré-remplis ----
+function updateMailtoBtn(){
+  const dict = I18N[currentLang] || I18N.fr;
+  const childFirst = document.getElementById('childFirstName').value;
+  const childLast = document.getElementById('childLastName').value;
+  const school = document.getElementById('schoolName').value;
+  const town = document.getElementById('schoolTown').value;
+  const subject = `${childFirst} ${childLast} - ${school} - ${town}`.trim();
+  const mailBtn = document.getElementById('mailtoBtn');
+  if(mailBtn){
+    mailBtn.href = `mailto:vaccin-hpv@ghsif.fr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(dict.mailtoBodyText)}`;
+  }
+}
+
+// ---- Images du document original (QR codes), rognées et encodées en base64 ----
+const QR_TOP = "data:image/png;base64,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";
+const QR_B1  = "data:image/png;base64,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";
+const QR_B2  = "data:image/png;base64,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";
+const QR_B3  = "data:image/png;base64,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";
+
+function fmtDate(iso){
+  if(!iso) return '';
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+// ---- Génération du PDF : dessin vectoriel direct (fidèle, sans dépendance de rendu HTML) ----
+function buildPdf(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('p','mm','a4');
+
+  const MX = 14, PAGE_W = 210, RIGHT = PAGE_W - MX, USABLE_W = RIGHT - MX;
+  const BLUE900=[11,61,92], BLUE700=[14,107,168], INK=[25,30,38], INKSOFT=[95,105,115];
+  const GREEN_FILL=[226,239,218], GREEN_BORDER=[168,213,181];
+  const PINK_FILL=[251,228,228], PINK_BORDER=[232,180,175];
+  let y = 16;
+
+  function setF(style,size,color){ doc.setFont('helvetica',style); doc.setFontSize(size); doc.setTextColor(color[0],color[1],color[2]); }
+  function wrap(str,width,size,style){ doc.setFont('helvetica',style||'normal'); doc.setFontSize(size); return doc.splitTextToSize(str,width); }
+  function centered(str,yy,size,style,color){ setF(style,size,color); doc.text(str,105,yy,{align:'center'}); }
+  function checkboxAt(x,yBase,ticked){
+    const s=3.0, top=yBase-s+0.9;
+    doc.setDrawColor(0,0,0); doc.setLineWidth(0.25);
+    doc.rect(x,top,s,s);
+    if(ticked){ doc.setFillColor(0,0,0); doc.rect(x+0.6,top+0.6,s-1.2,s-1.2,'F'); }
+    return s;
+  }
+  function sectionHeader(str){
+    const lines = wrap(str,176,9.5,'bold');
+    setF('bold',9.5,BLUE700);
+    lines.forEach((l,i)=> doc.text(l,105,y+i*3.6,{align:'center'}));
+    y += lines.length*3.6 + 1;
+  }
+
+  // ---------------- PAGE 1 ----------------
+  const titleLines = wrap("AUTORISATION PARENTALE POUR LA VACCINATION CONTRE LES PAPILLOMAVIRUS HUMAINS (HPV) ET/OU CONTRE LES MÉNINGITES À MÉNINGOCOQUE ACWY ET/OU AUTRES VACCINATIONS RECOMMANDÉES", 148, 11, 'bold');
+  setF('bold',11,BLUE900);
+  titleLines.forEach((l,i)=> doc.text(l,MX,y+i*4.3,{align:'left'}));
+  const titleH = titleLines.length*4.3;
+  doc.addImage(QR_TOP,'PNG', RIGHT-28, 14, 28, 28);
+  y = Math.max(y+titleH, 14+28) + 3;
+
+  setF('normal',8,INKSOFT);
+  doc.text("Merci de télécharger ce formulaire une fois complété et de l'envoyer à", 105, y, {align:'center'}); y+=3.8;
+  doc.setTextColor(BLUE700[0],BLUE700[1],BLUE700[2]);
+  doc.textWithLink("vaccin-hpv@ghsif.fr", 105, y, {align:'center', url:'mailto:vaccin-hpv@ghsif.fr'});
+  y += 6;
+
+  // ---- Section 1 : enfant ----
+  sectionHeader("1. Informations sur l’enfant");
+  const t1Top = y, rowH1 = 5.7;
+  doc.setDrawColor(0,0,0); doc.setLineWidth(0.2);
+  doc.rect(MX, t1Top, USABLE_W, rowH1*3);
+  doc.line(MX, t1Top+rowH1, RIGHT, t1Top+rowH1);
+  doc.line(MX, t1Top+rowH1*2, RIGHT, t1Top+rowH1*2);
+  doc.line(105, t1Top, 105, t1Top+rowH1*3);
+
+  function labelVal(x,yy,label,val,size){
+    const s = size||7.6;
+    setF('bold', s, INK); doc.text(label,x,yy);
+    const w = doc.getTextWidth(label+' ');
+    setF('normal', s, INK); doc.text(String(val||''), x+w, yy);
+  }
+  labelVal(MX+2, t1Top+4.2, "Nom de l'enfant :", document.getElementById('childLastName').value);
+  labelVal(107, t1Top+4.2, "Prénom de l'enfant :", document.getElementById('childFirstName').value);
+  labelVal(MX+2, t1Top+rowH1+4.2, "Date de naissance :", fmtDate(document.getElementById('childDob').value));
+  {
+    const sx = 107, sy = t1Top+rowH1+4.2;
+    setF('bold',7.6,INK); doc.text("Sexe :", sx, sy);
+    let cx = sx + doc.getTextWidth("Sexe : ")+1;
+    const sexVal = document.getElementById('childSex').value;
+    cx += checkboxAt(cx, sy, sexVal==='F')+1; setF('normal',7.6,INK); doc.text('F',cx,sy); cx+=4;
+    cx += checkboxAt(cx, sy, sexVal==='G')+1; setF('normal',7.6,INK); doc.text('G',cx,sy); cx+=5;
+    setF('bold',7.6,INK); doc.text("Classe scolaire :", cx, sy);
+    const clw = doc.getTextWidth("Classe scolaire : ");
+    setF('normal',7.6,INK); doc.text(document.getElementById('childClass').value, cx+clw+1, sy);
+  }
+  labelVal(MX+2, t1Top+rowH1*2+4.2, "Nom du collège :", document.getElementById('schoolName').value);
+  labelVal(107, t1Top+rowH1*2+4.2, "Commune du collège :", document.getElementById('schoolTown').value);
+  y = t1Top + rowH1*3 + 3;
+
+  // ---- Section 2 : parents ----
+  sectionHeader("2. Informations sur les parents / responsables légaux");
+  const t2Top = y, rowH2 = 5.7, col0=46, col1=(USABLE_W-col0)/2;
+  const rowTops = [0,1,2,3].map(i=> t2Top + rowH2*i);
+  const attachRowTop = t2Top + rowH2*4;
+
+  const attachLblText = "Numéro de sécurité sociale de rattachement de l\u2019enfant";
+  const attachLbl = wrap(attachLblText, col0-3, 6.4, 'bold');
+  const attachRowH = Math.max(rowH2, attachLbl.length*2.5 + 2.6);
+  const noteRowTop = attachRowTop + attachRowH;
+
+  const noteTxt2 = "Cochez la case correspondant au parent ou responsable légal auquel l\u2019enfant est rattaché";
+  const noteLinesCalc = wrap(noteTxt2, col1-4, 6, 'italic');
+  const noteRowH = Math.max(5.2, noteLinesCalc.length*2.3 + 2.6);
+  const t2Bottom = noteRowTop + noteRowH;
+
+  doc.setDrawColor(0,0,0); doc.setLineWidth(0.2);
+  doc.rect(MX, t2Top, USABLE_W, t2Bottom - t2Top);
+  for(let i=1;i<4;i++) doc.line(MX, rowTops[i], RIGHT, rowTops[i]);
+  doc.line(MX, attachRowTop, RIGHT, attachRowTop);
+  doc.line(MX, noteRowTop, RIGHT, noteRowTop);
+  doc.line(MX+col0, t2Top, MX+col0, t2Bottom);
+  doc.line(MX+col0+col1, t2Top, MX+col0+col1, t2Bottom);
+
+  setF('bold',7.4,INK);
+  doc.text("Parent / Responsable légal 1", MX+col0+col1/2, t2Top+4.2, {align:'center'});
+  doc.text("Parent / Responsable légal 2", MX+col0+col1+col1/2, t2Top+4.2, {align:'center'});
+  const p2Labels = ["Nom et Prénom","Téléphone portable","Numéro de sécurité sociale"];
+  const p1Vals = [document.getElementById('p1Name').value, document.getElementById('p1Phone').value, document.getElementById('p1Nir').value];
+  const p2Vals = [document.getElementById('p2Name').value, document.getElementById('p2Phone').value, document.getElementById('p2Nir').value];
+  for(let i=0;i<3;i++){
+    const ry = rowTops[i+1]+4.2;
+    setF('bold',7.2,INK); doc.text(p2Labels[i], MX+2, ry);
+    setF('normal',7.2,INK);
+    doc.text(String(p1Vals[i]||''), MX+col0+2, ry);
+    doc.text(String(p2Vals[i]||''), MX+col0+col1+2, ry);
+  }
+  {
+    // Ligne "rattachement" : libellé (col0) en haut de sa propre ligne, cases à cocher, puis note en italique dessous
+    setF('bold',6.4,INK);
+    attachLbl.forEach((l,i)=> doc.text(l, MX+2, attachRowTop+3.2+i*2.7));
+
+    const ry = attachRowTop+4.2;
+    const attachVal = document.querySelector('input[name="attach"]:checked').value;
+    let cx = MX+col0+2;
+    setF('normal',6.8,INK);
+    cx += checkboxAt(cx, ry, attachVal==='1')+1.5;
+    doc.text("Parent / Responsable légal 1", cx, ry);
+    cx = MX+col0+col1+2;
+    const s2 = checkboxAt(cx, ry, attachVal==='2')+1.5;
+    doc.text("Parent / Responsable légal 2", cx+s2, ry);
+
+    setF('italic',6,[80,80,80]);
+    noteLinesCalc.forEach((l,i)=> doc.text(l, MX+col0+2, noteRowTop+3+i*2.6));
+    noteLinesCalc.forEach((l,i)=> doc.text(l, MX+col0+col1+2, noteRowTop+3+i*2.6));
+  }
+  y = t2Bottom + 2;
+  {
+    const noteLines = wrap("Ces informations figurent sur l'attestation de droits de l'enfant ou du/des parent(s) auquel(s) il est rattaché. Consultez www.ameli.fr/assure/attestation-droits", USABLE_W, 6.6, 'normal');
+    setF('normal',6.6,INKSOFT);
+    noteLines.forEach((l,i)=> doc.text(l, MX, y+i*2.6));
+    y += noteLines.length*2.6 + 2;
+  }
+
+  // ---- Section 3 : autorisations ----
+  sectionHeader("3. Autorisations à cocher");
+  const leftW = USABLE_W*0.62, rightW = USABLE_W*0.38 - 2;
+
+  function authBlock(titleTxt, subTxt, noTxt, ticked, subChecks){
+    const PAD_L = 2, CB = 3.0, GAP = 1.5;
+    const TITLE_INDENT = PAD_L + CB + GAP;      // texte du titre, aligné après la case à cocher
+    const SUB_INDENT = TITLE_INDENT;             // paragraphe italique aligné sous le titre
+    const SC_PAD_L = 6, SC_CB = 3.0;
+    const SC_LABEL_INDENT = SC_PAD_L + SC_CB + GAP;  // libellé des sous-cases
+    const SC_HINT_INDENT = SC_LABEL_INDENT;          // note italique alignée sous le libellé
+
+    const titleLines = wrap(titleTxt, leftW-TITLE_INDENT-2, 7.6, 'bold');
+    const subLines = subTxt ? wrap(subTxt, leftW-SUB_INDENT-2, 6.6, 'italic') : [];
+    const PAD_TOP = 3.4, PAD_BOTTOM = 1.8;
+    let leftH = PAD_TOP + titleLines.length*3.1 + 0.8 + (subLines.length? subLines.length*2.5+1.1 : 0);
+    let scH = [];
+    if(subChecks){
+      subChecks.forEach(sc=>{
+        const labLines = wrap(sc.label, leftW-SC_LABEL_INDENT-2, 6.8, 'bold');
+        const hintLines = wrap(sc.hint, leftW-SC_HINT_INDENT-2, 6, 'italic');
+        const h = labLines.length*2.7 + 2.1 + hintLines.length*2.3 + 1.0;
+        scH.push({labLines,hintLines,h});
+        leftH += h;
+      });
+    }
+    leftH += PAD_BOTTOM;
+    const rightLines = wrap(noTxt, rightW-8, 6.8, 'normal');
+    const rightH = PAD_TOP + rightLines.length*3 + PAD_BOTTOM;
+    const blockH = Math.max(leftH, rightH);
+
+    doc.setDrawColor(0,0,0); doc.setLineWidth(0.2);
+    doc.setFillColor(GREEN_FILL[0],GREEN_FILL[1],GREEN_FILL[2]);
+    doc.rect(MX, y, leftW, blockH, 'FD');
+    doc.setFillColor(PINK_FILL[0],PINK_FILL[1],PINK_FILL[2]);
+    doc.rect(MX+leftW, y, rightW, blockH, 'FD');
+
+    let ly = y+PAD_TOP;
+    checkboxAt(MX+PAD_L, ly, ticked==='yes');
+    setF('bold',7.6,INK);
+    titleLines.forEach((l,i)=> doc.text(l, MX+TITLE_INDENT, ly+i*3.1));
+    ly += titleLines.length*3.1 + 0.8;
+    if(subLines.length){
+      setF('italic',6.6,[70,70,70]);
+      subLines.forEach((l,i)=> doc.text(l, MX+SUB_INDENT, ly+i*2.5));
+      ly += subLines.length*2.5 + 1.1;
+    }
+    if(subChecks){
+      subChecks.forEach((sc,idx)=>{
+        const info = scH[idx];
+        checkboxAt(MX+SC_PAD_L, ly, sc.checked);
+        setF('bold',6.8,INK);
+        info.labLines.forEach((l,i)=> doc.text(l, MX+SC_LABEL_INDENT, ly+i*2.7));
+        ly += info.labLines.length*2.7;
+        setF('italic',6,[80,80,80]);
+        info.hintLines.forEach((l,i)=> doc.text(l, MX+SC_HINT_INDENT, ly+2.1+i*2.3));
+        ly += 2.1 + info.hintLines.length*2.3 + 1.0;
+      });
+    }
+
+    let ry = y+4;
+    const cbW2 = checkboxAt(MX+leftW+2, ry, ticked==='no');
+    setF('normal',6.8,INK);
+    rightLines.forEach((l,i)=> doc.text(l, MX+leftW+2+cbW2+1.5, ry+i*3));
+
+    y += blockH + 1.6;
+  }
+
+  authBlock(
+    "J’autorise la vaccination contre les infections HPV. (Gardasil9®)",
+    "La vaccination contre les HPV nécessite 2 doses espacées entre 5 et 13 mois, lorsqu’elle est réalisée entre 11 et 14 ans.",
+    "Je n’autorise pas la vaccination contre les infections HPV.",
+    authState.hpv
+  );
+  authBlock(
+    "J’autorise la vaccination contre les méningites à méningocoque ACWY.",
+    "La vaccination contre les méningocoques ACWY nécessite une seule dose. Elle est aussi à refaire pour les enfants ayant déjà été vacciné contre les méningocoques C ou ACWY avant l’âge de 11 ans. La spécialité vaccinale est choisie par l’équipe médicale (Nimenrix®, MenQuadfi® ou Menveo®)",
+    "Je n’autorise pas la vaccination contre les méningocoques ACWY.",
+    authState.acwy
+  );
+  authBlock(
+    "J’autorise la vaccination contre les autres maladies recommandées par le calendrier vaccinal en vigueur.",
+    "La mise à jour des vaccinations contre la diphtérie, le tétanos, la poliomyélite et la coqueluche (DTPC), la rougeole, les oreillons et la rubéole (ROR) et l’hépatite B peut également être proposée par l’équipe de vaccination. Préciser les vaccins que vous autorisez (si votre enfant est déjà à jour, il ne sera pas revacciné) :",
+    "Je n’autorise pas la vaccination contre toutes les autres maladies recommandées par le calendrier vaccinal en vigueur",
+    authState.other,
+    [
+      {label:"Diphtérie, tétanos, poliomyélite, coqueluche (DTP-coq)", hint:"Une dose de rappel est recommandée à l’âge de 6 ans, puis un rappel entre 11 et 13 ans", checked:document.getElementById('subDtp').checked},
+      {label:"Rougeole, oreillons, rubéole (ROR)", hint:"Deux doses sont recommandées, à partir de l’âge de 12 mois révolus", checked:document.getElementById('subRor').checked},
+      {label:"Hépatite B", hint:"Trois doses au total sont recommandées pour une protection à vie", checked:document.getElementById('subHepb').checked}
+    ]
+  );
+
+  // ---- Section 4 : carnet de santé ----
+  y += 2.2;
+  sectionHeader("4. La présence du carnet de santé est essentielle pour analyser le statut vaccinal de votre enfant.");
+  function checkLine(txt, ticked){
+    const lines = wrap(txt, USABLE_W-8, 7.2, 'normal');
+    const cb = checkboxAt(MX, y+2.9, ticked);
+    setF('normal',7.2,INK);
+    lines.forEach((l,i)=> doc.text(l, MX+cb+2, y+2.9+i*2.9));
+    y += lines.length*2.9 + 1.3;
+  }
+  checkLine("Je m’engage à fournir le carnet de santé à mon enfant le jour de la vaccination.", document.getElementById('carnetFourni').checked);
+  checkLine("Je ne peux pas fournir le carnet de santé et j’atteste que mon enfant n’a pas déjà été vacciné contre HPV et la méningite ACWY", document.getElementById('carnetAbsent').checked);
+  y += 3.2;
+
+  // ---- Section 5 : signatures ----
+  sectionHeader("5. Signatures obligatoires");
+  {
+    const lines = wrap("La vaccination des mineurs nécessite l’autorisation des deux titulaires de l’autorité parentale.", USABLE_W, 7.6, 'bold');
+    setF('bold',7.6,INK);
+    lines.forEach((l,i)=>{
+      doc.text(l, MX, y+i*3.4);
+      doc.setLineWidth(0.2);
+      doc.line(MX, y+i*3.4+0.8, MX+doc.getTextWidth(l), y+i*3.4+0.8);
+    });
+    y += lines.length*3.4 + 3;
+  }
+  setF('bold',7.6,INK); doc.text("Date :", MX, y);
+  setF('normal',7.6,INK); doc.text(fmtDate(document.getElementById('signDate').value), MX+12, y);
+  y += 5;
+
+  const sigW = (USABLE_W-8)/2, sigH = 20;
+  setF('normal',7.4,INK);
+  doc.text("Signature Parent/Responsable légal 1 :", MX, y);
+  doc.text("Signature Parent/Responsable légal 2 :", MX+sigW+8, y);
+  y += 2;
+  doc.setDrawColor(150,150,150);
+  doc.rect(MX, y, sigW, sigH);
+  doc.rect(MX+sigW+8, y, sigW, sigH);
+  if(!pad1.isEmpty()) doc.addImage(pad1.dataUrl(),'PNG', MX+2, y+2, sigW-4, sigH-4);
+  if(!pad2.isEmpty()) doc.addImage(pad2.dataUrl(),'PNG', MX+sigW+10, y+2, sigW-4, sigH-4);
+  y += sigH + 4;
+
+  setF('normal',7,INK);
+  doc.text("À cocher uniquement lorsqu’un seul parent/responsable légal signe le formulaire :", MX, y);
+  y += 3.6;
+  checkLine("Je déclare être le seul responsable légal de l’enfant.", document.getElementById('soloOnly').checked);
+  checkLine("Je déclare sur l'honneur que l’autre parent est empêché de signer mais a donné son autorisation.", document.getElementById('soloAbsent').checked);
+
+  // ---------------- PAGE 2 ----------------
+  doc.addPage();
+  y = 18;
+  centered("INFORMATIONS SUR LE VACCIN CONTRE LES INFECTIONS A HPV ET CONTRE LES MÉNINGITES ACWY", y, 10.5, 'bold', BLUE900);
+  y += 8;
+
+  function paragraph(txt){
+    const lines = wrap(txt, USABLE_W, 8.6, 'normal');
+    setF('normal',8.6,INK);
+    lines.forEach((l,i)=> doc.text(l, MX, y+i*3.9));
+    y += lines.length*3.9 + 3.5;
+  }
+  function subHeading(txt){
+    y += 1.5;
+    centered(txt, y, 9, 'bold', INK);
+    y += 5.5;
+  }
+
+  paragraph("Le vaccin contre les infections à papillomavirus (HPV) avec lequel votre enfant sera vacciné est sûr et efficace. La vaccination contre les infections à HPV est recommandée pour toutes les jeunes filles et pour tous les jeunes garçons âgés de 11 à 14 ans révolus. En protégeant nos adolescents dès maintenant, nous pouvons les aider à réduire considérablement leur risque de développer des cancers liés au HPV plus tard dans leur vie. En effet, des études ont montré que la vaccination contre le HPV peut réduire le risque de développer des infections à HPV de manière significative, jusqu'à 90 %, ce qui permet de réduire aussi de manière significative le risque de développer des lésions précancéreuses et des cancers associés.");
+  paragraph("La vaccination contre les infections invasives à méningocoques ACWY est recommandée chez tous les jeunes âgés de 11 à 14 ans. Les méningites sont des infections transmissibles graves qui touchent particulièrement les adolescents et les jeunes adultes. Elles peuvent conduire au décès ou laisser des séquelles importantes. La vaccination contre les méningocoques ACWY avec une dose unique de vaccin permet une protection efficace et prolongée. Comme pour tous les vaccins, quelques effets secondaires sont possibles et bénins pour la grande majorité.");
+  setF('normal',8.6,INK);
+  {
+    const l1 = "Vous trouverez plus d’information sur le vaccin sur le site de l’Agence nationale de sécurité";
+    const l2 = "des médicaments et des produits de santé : www.ansm.sante.fr ou en scannant le QR code ci-dessous.";
+    doc.text(l1, MX, y); y+=3.9;
+    doc.setTextColor(BLUE700[0],BLUE700[1],BLUE700[2]);
+    doc.textWithLink(l2, MX, y, {url:'http://www.ansm.sante.fr'});
+    y += 7;
+  }
+
+  subHeading("DÉROULEMENT DE LA SÉANCE DE VACCINATION");
+  paragraph("Avant la séance de vaccination, l’équipe médicale s’entretiendra avec votre enfant et vérifiera son carnet de santé. Votre enfant bénéficiera, ensuite, de l’injection d’une dose de vaccin contre les HPV et/ou une dose de vaccin contre les méningocoques ACWY dans un espace confidentiel. Il est possible d’administrer ces deux vaccins lors d’une même séance.");
+  paragraph("Après la ou les injections, il peut se produire des évanouissements, parfois accompagnés de tremblements ou raideurs et pouvant être accompagnés de chutes. Bien que les cas d'évanouissement soient peu fréquents, votre enfant restera en observation, sous la surveillance de l’équipe médicale, durant les 15 minutes suivant l’injection du ou des vaccins. Si l’équipe de vaccination offre ce service complémentaire, d’autres vaccinations recommandées pourront être réalisées (DTP coq, ROR, hépatite B) selon le statut vaccinal de votre enfant. Un maximum de 4 vaccins pourra être réalisé, en concertation avec votre enfant.");
+
+  subHeading("MENTIONS D’INFORMATION INFORMATIQUES ET LIBERTÉS");
+  paragraph("La présente campagne de vaccination implique la mise en œuvre de traitements de données à caractère personnel.");
+  paragraph("En particulier, les formulaires d’autorisation à la vaccination seront utilisés, par les structures et centres de vaccination mobilisés par les ARS, aux fins d’organisation de la campagne nationale de vaccination contre les infections à papillomavirus humains et du rattrapage éventuel des autres vaccinations. Ces traitements sont mis en œuvre sous la responsabilité conjointe de l’ARS compétente et du centre de vaccination ou de la structure de prévention désignés par l’ARS réalisant la vaccination de votre enfant.");
+  paragraph("L’établissement scolaire de votre enfant est uniquement chargé de collecter, pour le compte de ces responsables de traitement, la présente autorisation complétée par vos soins qu’il transmet ensuite au centre ou à la structure de vaccination. Cette transmission est réalisée sous enveloppe cachetée et les établissements n’ont donc pas connaissance des informations qui y figurent.");
+  paragraph("Sont uniquement destinataires des données collectées les personnels habilités au sein des structures de santé désignées par l’ARS sur leur territoire. Elles pourront être conservées par ces entités à des fins d’éventuelles recherches en responsabilité, pendant 18 ans à compter de l’acte de vaccination.");
+  paragraph("Les droits d’accès, de rectification, de limitation et d’opposition, prévus par les articles 15, 16, 18 et 21 du RGPD, s’agissant du traitement relatif aux formulaires d’autorisation s’exercent auprès du chef d’établissement qui transmet sans délai et par tout moyen, les demandes d’exercice des droits des personnes au centre ou à la structure de vaccination territorialement compétent.");
+  paragraph("Par ailleurs, ces formulaires seront utilisés, après l’acte de vaccination effectué au sein de l’établissement, par ces mêmes centres et structures de vaccination, afin d’adresser à l’Assurance maladie les éléments nécessaires à la prise en charge de ces vaccins.");
+  paragraph("Des informations complémentaires sur ces traitements sont mises à votre disposition sur le site internet du ministère chargé de la santé et des ARS.");
+
+  const qrY = 260, qrS = 24;
+  doc.addImage(QR_B1,'PNG', 40, qrY, qrS, qrS);
+  doc.addImage(QR_B2,'PNG', 93, qrY, qrS, qrS);
+  doc.addImage(QR_B3,'PNG', 146, qrY, qrS, qrS);
+  setF('italic',6.6,INKSOFT);
+  doc.text("Plus d'info sur la campagne de", 158, qrY+qrS+3.2, {align:'center'});
+  doc.text("vaccination Sud 77", 158, qrY+qrS+6.4, {align:'center'});
+
+  return doc;
+}
+
+// ---- Envoi vers le flux Power Automate (GHSIF, sans service tiers) ----
+const POWER_AUTOMATE_URL = "https://default20f7a3a449784751b05b150208674a.75.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/23/workflows/115ae90f9c82432cae3dece370c9886e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=eGmAq_DqkawR0pbL36wvHQ_3I2cUdBMlF35IsTBk8xE";
+const POWER_AUTOMATE_SECRET = "ghsif-hpv-41174118";
+
+function pdfToBase64(pdfDoc){
+  // doc.output('datauristring') renvoie "data:application/pdf;filename=...;base64,XXXX"
+  const dataUri = pdfDoc.output('datauristring');
+  return dataUri.substring(dataUri.indexOf(',') + 1);
+}
+
+// Nom-Prénom-Collège.pdf (le collège est ajouté seulement s'il est renseigné)
+function buildPdfFilename(){
+  const school = document.getElementById('schoolName').value.trim();
+  const town = document.getElementById('schoolTown').value.trim();
+  const childLast = document.getElementById('childLastName').value.trim();
+  const childFirst = document.getElementById('childFirstName').value.trim();
+  const parts = [school, town, childLast, childFirst].filter(Boolean);
+  const base = parts.length ? parts.join('-') : 'enfant';
+  return base.replace(/\s+/g, '-') + '.pdf';
+}
+
+document.getElementById('sendEmailBtn').addEventListener('click', async ()=>{
+  const btn = document.getElementById('sendEmailBtn');
+  const originalLabel = btn.textContent;
+
+  btn.disabled = true;
+  btn.textContent = tr('sendingLabel');
+  try{
+    const pdfDoc = buildPdf();
+    const pdfBase64 = pdfToBase64(pdfDoc);
+
+    const childFirst = document.getElementById('childFirstName').value;
+    const childLast = document.getElementById('childLastName').value;
+    const school = document.getElementById('schoolName').value;
+    const town = document.getElementById('schoolTown').value;
+    const filename = buildPdfFilename();
+
+    const payload = {
+      pdf_base64: pdfBase64,
+      filename: filename,
+      child_name: `${childFirst} ${childLast}`,
+      school_name: `${school} (${town})`,
+      secret_key: POWER_AUTOMATE_SECRET
+    };
+
+    const resp = await fetch(POWER_AUTOMATE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if(!resp.ok){
+      throw new Error('HTTP ' + resp.status);
+    }
+
+    document.getElementById('emailSentNote').style.display = 'block';
+  } catch(err){
+    console.error(err);
+    alert(tr('sendErrorAlert').replace('{detail}', err.message));
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+});
+
+// ---- Téléchargement ----
+document.getElementById('downloadBtn').addEventListener('click', async ()=>{
+  const btn = document.getElementById('downloadBtn');
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = tr('generatingLabel');
+  try{
+    const doc = buildPdf();
+    const filename = buildPdfFilename();
+    const blob = doc.output('blob');
+
+    const downloadsApi = (window.claude && typeof window.claude.use === 'function')
+      ? await window.claude.use('downloads')
+      : null;
+
+    if(downloadsApi){
+      try{
+        await downloadsApi.save({ filename, data: blob });
+        document.getElementById('downloadedNote').style.display = 'block';
+      } catch(saveErr){
+        if(saveErr && saveErr.code === 'declined'){
+          // annulé par l'utilisateur, rien à signaler
+        } else {
+          console.error(saveErr);
+          alert(tr('downloadFailAlert').replace('{code}', saveErr && saveErr.code ? saveErr.code : 'unknown'));
+        }
+      }
+    } else {
+      doc.save(filename);
+      document.getElementById('downloadedNote').style.display = 'block';
+    }
+  } catch(err){
+    console.error(err);
+    alert(tr('downloadErrorAlert'));
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+});
+
+// default date = today
+document.getElementById('signDate').valueAsDate = new Date();
+
+applyLanguage();
+showStep(current);
+</script>
+</body>
+</html>
